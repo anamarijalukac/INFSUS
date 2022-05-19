@@ -21,20 +21,23 @@ public class AddEventUseCase extends UseCase<AddEventUseCase.InputValues, AddEve
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        if (!eventRepo.existsByName(input.getName())) {
-            throw new Exception("Event with this name already exists!");
+        if (!eventRepo.existsById(input.getEventId())) {
+            throw new Exception("This event already exists!");
         }
 
         Event event=new Event(
+                input.getEventId(),
                 input.getName(),
                 input.getDescription(),
                 input.getType(),
                 input.getDate()
+
         );
 
-        Orchestra orchestra=orchestraRepo.findByName(input.orchestra.getName());
+        Orchestra orchestra=orchestraRepo.getById(input.getOrchestraId());
         orchestra.getEvents().add(event);
         orchestraRepo.save(orchestra);
+        eventRepo.save(event);
         return new AddEventUseCase.OutputValues(event);
     }
 
@@ -44,14 +47,16 @@ public class AddEventUseCase extends UseCase<AddEventUseCase.InputValues, AddEve
         private final String description;
         private final String type;
         private final Date date;
-        private final Orchestra orchestra;
+        private final Long eventId;
+        private final Long orchestraId;
 
-        public InputValues(String name, String description, String type, Date date,Orchestra orchestra) {
+        public InputValues(String name, String description, String type, Date date, Long eventId, Long orchestraId) {
             this.name = name;
             this.description = description;
             this.type = type;
             this.date = date;
-            this.orchestra=orchestra;
+            this.eventId = eventId;
+            this.orchestraId = orchestraId;
         }
 
         public String getName() {
@@ -70,8 +75,12 @@ public class AddEventUseCase extends UseCase<AddEventUseCase.InputValues, AddEve
             return date;
         }
 
-        public Orchestra getOrchestra() {
-            return orchestra;
+        public Long getEventId() {
+            return eventId;
+        }
+
+        public Long getOrchestraId() {
+            return orchestraId;
         }
     }
 

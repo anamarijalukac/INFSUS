@@ -7,7 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface JpaOrchestraRepository extends CrudRepository<OrchestraData, Long> {
 
-    boolean existsByName(String name);
 
-    OrchestraData findByName(String name);
 }

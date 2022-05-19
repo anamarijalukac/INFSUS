@@ -13,11 +13,12 @@ public class CreateUserUseCase extends UseCase<CreateUserUseCase.InputValues, Cr
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        if (repository.existsByEmail(input.getEmail())) {
+        if (repository.existsById(input.getUserId())) {
             throw new Exception("Email address already in use!");
         }
 
         User user = new User(
+                input.getUserId(),
                 input.getName(),
                 input.getEmail(),
                 input.getAddress(),
@@ -30,17 +31,23 @@ public class CreateUserUseCase extends UseCase<CreateUserUseCase.InputValues, Cr
     }
 
 
-    public static class InputValues implements UseCase.InputValues{
+    public static class InputValues implements UseCase.InputValues {
         private final String name;
         private final String email;
         private final String address;
         private final String password;
+        private final Long userId;
 
-        public InputValues(String name, String email, String address, String password) {
+        public InputValues(String name, String email, String address, String password, Long userId) {
             this.name = name;
             this.email = email;
             this.address = address;
             this.password = password;
+            this.userId = userId;
+        }
+
+        public Long getUserId() {
+            return userId;
         }
 
         public String getName() {

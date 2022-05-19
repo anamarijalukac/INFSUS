@@ -11,11 +11,13 @@ import java.util.Optional;
 public interface RegistrationRepository {
 
 
-    boolean existsByUserAndOrchestra(User user, Orchestra orchestra);
+    boolean existsById(Long id);
 
-    Registration findByUserAndOrchestra(User user, Orchestra orchestra);
+    Registration findById(Long id);
 
-    boolean ifUserIsMember(User user, Orchestra orchestra);
+
+
+    Registration save(Registration registration);
 
 
 }

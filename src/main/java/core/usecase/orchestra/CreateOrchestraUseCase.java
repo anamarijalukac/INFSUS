@@ -18,13 +18,14 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        if (repository.existsByName(input.getName())) {
+        if (repository.existsById(input.getOrchestraId())) {
             throw new Exception("Orchestra name already in use!");
         }
 
         Orchestra orchestra = new Orchestra(
                 input.getName(),
-                input.getFounded_date()
+                input.getFounded_date(),
+                input.getOrchestraId()
         );
 
         orchestra.setMembers(input.getMembers());
@@ -44,12 +45,14 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
         private final Date founded_date;
         private final List<User> members;
         private final User leader;
+        private final Long orchestraId;
 
-        public InputValues(String name, Date founded_date, List<User> members, User leader) {
+        public InputValues(String name, Date founded_date, List<User> members, User leader, Long orchestraId) {
             this.name = name;
             this.founded_date = founded_date;
             this.members = members;
             this.leader = leader;
+            this.orchestraId = orchestraId;
         }
 
         public String getName() {
@@ -66,6 +69,10 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
 
         public User getLeader() {
             return leader;
+        }
+
+        public Long getOrchestraId() {
+            return orchestraId;
         }
     }
 

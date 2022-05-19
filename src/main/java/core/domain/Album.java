@@ -9,12 +9,25 @@ public class Album {
     private String genre;
     private Year year;
     private String name;
+    private Long id;
 
-
-    public Album(String genre, Year year, String name) {
+    public Album(String genre, Year year, String name, Long id) {
         this.genre = genre;
         this.year = year;
         this.name = name;
+        this.id = id;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Song> getSongs() {

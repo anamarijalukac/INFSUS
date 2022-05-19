@@ -5,10 +5,20 @@ import java.util.List;
 public class Discography {
 
     private List<Album> albumList;
+    private Long id;
 
 
-    public Discography(List<Album> albumList) {
-        this.albumList = albumList;
+    public Discography(Long id,List<Album> albumList) {
+        this.albumList=albumList;
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Album> getAlbumList() {

@@ -26,7 +26,8 @@ public class AlbumData {
     @Column(unique = true,nullable = false)
     private String name;
 
-    public AlbumData(String genre, Year year, String name) {
+    public AlbumData(Long id,String genre, Year year, String name) {
+        this.id=id;
         this.genre = genre;
         this.year = year;
         this.name = name;
@@ -36,7 +37,7 @@ public class AlbumData {
     }
 
     public static AlbumData from(Album a) {
-        return new AlbumData(
+        return new AlbumData(a.getId(),
                 a.getGenre(),
                 a.getYear(),
                 a.getName()
@@ -45,9 +46,11 @@ public class AlbumData {
 
     public Album fromThis() {
         return new Album(
-               this.genre,this.year,this.name
+               this.genre,this.year,this.name,this.id
         );
     }
+
+
 
     public Long getId() {
         return id;

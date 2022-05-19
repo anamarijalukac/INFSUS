@@ -33,26 +33,32 @@ public class EventData {
     @OneToMany(mappedBy="event")
     private List<CommentData> comments;
 
-    public EventData(String name, String description, String type, Date date) {
+    public EventData(Long id,String name, String description, String type, Date date) {
+        this.id=id;
         this.name = name;
         this.description = description;
         this.type = type;
         this.date = date;
     }
 
+
+
     public static EventData from(Event c) {
-        return new EventData(
+        return new EventData(c.getId(),
                c.getName(),c.getDescription(),c.getType(),c.getDate()
         );
     }
 
     public Event fromThis() {
-        return new Event(
+        return new Event(this.id,
                 this.name,this.description,this.type,this.date
         );
     }
 
-    private EventData(){}
+    protected EventData(){}
+
+
+
 
     public Long getId() {
         return id;

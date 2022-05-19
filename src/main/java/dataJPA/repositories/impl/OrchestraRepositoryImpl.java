@@ -6,7 +6,9 @@ import dataJPA.entities.EventData;
 import dataJPA.entities.OrchestraData;
 import dataJPA.repositories.interfaces.JpaEventRepository;
 import dataJPA.repositories.interfaces.JpaOrchestraRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OrchestraRepositoryImpl implements OrchestraRepository {
 
     private JpaOrchestraRepository repository;
@@ -15,15 +17,15 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
         this.repository = repository;
     }
 
-    @Override
-    public boolean existsByName(String name) {
-        return repository.existsByName(name);
 
+    @Override
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 
     @Override
-    public Orchestra findByName(String name) {
-        return repository.findByName(name).fromThis();
+    public Orchestra getById(Long id) {
+        return repository.findById(id).get().fromThis();
     }
 
     @Override

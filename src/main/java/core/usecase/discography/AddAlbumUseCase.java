@@ -17,9 +17,19 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
     @Override
     public OutputValues execute(InputValues input) throws Exception {
 
-        Discography discography= input.getDiscography();
-        Album album=new Album(input.getGenre(),input.getYear(),input.getName());
-        repository.addAlbum(discography,album);
+
+        Album album=new Album(input.getGenre(),input.getYear(),input.getName(), input.getAlbumId());
+
+        Discography discography= repository.getDiscographyById(input.getDiscographyId());
+
+        discography.getAlbumList().add(album);
+
+        repository.save(discography);
+
+
+
+
+
         return new AddAlbumUseCase.OutputValues(album);
 
 
@@ -31,17 +41,26 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
         private final String genre;
         private final Year year;
         private final String name;
-        private final Discography discography;
+        private final Long albumId;
 
-        public InputValues(String genre, Year year, String name, Discography discography) {
+        private final Long discographyId;
+
+
+        public InputValues(String genre, Year year, String name, Long albumId, Long discographyId) {
             this.genre = genre;
             this.year = year;
             this.name = name;
-            this.discography = discography;
+            this.albumId = albumId;
+            this.discographyId = discographyId;
         }
 
-        public Discography getDiscography() {
-            return discography;
+
+        public Long getAlbumId() {
+            return albumId;
+        }
+
+        public Long getDiscographyId() {
+            return discographyId;
         }
 
         public String getGenre() {
@@ -55,6 +74,8 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
         public String getName() {
             return name;
         }
+
+
     }
 
     public static class OutputValues implements UseCase.OutputValues {

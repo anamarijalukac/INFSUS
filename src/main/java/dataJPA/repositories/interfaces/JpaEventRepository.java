@@ -6,8 +6,6 @@ import dataJPA.entities.UserData;
 import org.springframework.data.repository.CrudRepository;
 
 public interface JpaEventRepository extends CrudRepository<EventData, Long> {
-    boolean existsByName(String name);
 
-    EventData findByName(String name);
 
 }

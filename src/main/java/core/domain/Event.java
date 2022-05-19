@@ -11,11 +11,23 @@ public class Event {
     private Date date;
     private List<Comment> comments;
 
-    public Event(String name, String description, String type, Date date) {
+    private Long id;
+
+    public Event(Long id,String name, String description, String type, Date date) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
         this.date = date;
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Comment> getComments() {

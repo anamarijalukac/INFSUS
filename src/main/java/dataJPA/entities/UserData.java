@@ -40,8 +40,8 @@ public class UserData {
     @JoinColumn(name = "orchestra_id")
     private OrchestraData orchestra;
 
-    public UserData(String name, String email, String address, String password) {
-
+    public UserData(Long id,String name, String email, String address, String password) {
+    this.id=id;
         this.name = name;
         this.email = email;
         this.address = address;
@@ -52,13 +52,13 @@ public class UserData {
     }
 
     public static UserData from(User c) {
-        return new UserData(
+        return new UserData(c.getId(),
                 c.getName(),c.getEmail(),c.getAddress(),c.getPassword()
         );
     }
 
     public User fromThis() {
-        return new User(
+        return new User(this.id,
                this.name,this.email,this.address,this.password
         );
     }

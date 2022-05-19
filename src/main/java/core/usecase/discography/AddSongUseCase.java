@@ -5,7 +5,6 @@ import core.domain.Discography;
 import core.domain.Song;
 import core.usecase.UseCase;
 
-import java.time.Year;
 import java.util.Date;
 
 public class AddSongUseCase extends UseCase<AddSongUseCase.InputValues, AddSongUseCase.OutputValues> {
@@ -19,9 +18,25 @@ public class AddSongUseCase extends UseCase<AddSongUseCase.InputValues, AddSongU
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        Song song=new Song(input.getName(),input.getDate(),input.getArtist());
-        Album album=input.getAlbum();
-        repository.addSong(album,song);
+        Song song=new Song(input.getName(),input.getDate(),input.getArtist(), input.getSongId());
+
+
+        Discography discography= repository.getDiscographyById(input.getDiscographyId());
+        Album result=null;
+        for(Album a: discography.getAlbumList()){
+            if(a.getId().equals(input.getAlbumId())){
+                result=a;
+            }
+        }
+
+        discography.getAlbumList().remove(result);
+        assert result != null;
+        result.getSongs().add(song);
+        discography.getAlbumList().add(result);
+
+        repository.save(discography);
+
+
         return new AddSongUseCase.OutputValues(song);
 
     }
@@ -30,13 +45,31 @@ public class AddSongUseCase extends UseCase<AddSongUseCase.InputValues, AddSongU
         private final String name;
         private final Date date;
         private final String artist;
-        private final Album album;
+        private final Long songId;
+        private final Long discographyId;
+        private final Long albumId;
 
-        public InputValues(String name, Date date, String artist, Album album) {
+        public InputValues(String name, Date date, String artist, Long albumId, Long discographyId, Long songId, Long discographyId1, Long albumId1) {
             this.name = name;
             this.date = date;
             this.artist = artist;
-            this.album = album;
+            this.songId = songId;
+
+
+            this.discographyId = discographyId1;
+            this.albumId = albumId1;
+        }
+
+        public Long getSongId() {
+            return songId;
+        }
+
+        public Long getDiscographyId() {
+            return discographyId;
+        }
+
+        public Long getAlbumId() {
+            return albumId;
         }
 
         public String getName() {
@@ -51,9 +84,7 @@ public class AddSongUseCase extends UseCase<AddSongUseCase.InputValues, AddSongU
             return artist;
         }
 
-        public Album getAlbum() {
-            return album;
-        }
+
     }
 
     public static class OutputValues implements UseCase.OutputValues {

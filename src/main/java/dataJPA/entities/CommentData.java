@@ -1,9 +1,7 @@
 package dataJPA.entities;
 
 
-import core.domain.Album;
 import core.domain.Comment;
-import core.domain.Event;
 
 import javax.persistence.*;
 
@@ -25,7 +23,8 @@ public class CommentData {
     @JoinColumn(name = "event_id")
     private EventData event;
 
-    public CommentData(String commentText, String commentatorName) {
+    public CommentData(Long id, String commentText, String commentatorName) {
+        this.id = id;
         this.commentText = commentText;
         this.commentatorName = commentatorName;
     }
@@ -35,15 +34,18 @@ public class CommentData {
 
     public static CommentData from(Comment c) {
         return new CommentData(
-                c.getCommentText(),c.getCommentatorName()
+                c.getId(),
+                c.getCommentText(), c.getCommentatorName()
         );
     }
 
     public Comment fromThis() {
         return new Comment(
-                this.commentText,this.commentatorName
+                this.commentText, this.commentatorName, this.id
         );
     }
+
+
 
     public Long getId() {
         return id;

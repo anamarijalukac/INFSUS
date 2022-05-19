@@ -22,20 +22,21 @@ public class EducationData {
     @OneToOne(mappedBy = "education")
     private UserData user;
 
-    public EducationData(String name, String level) {
+    public EducationData(String name, String level,Long id) {
         this.name = name;
         this.level = level;
+        this.id=id;
     }
 
     public static EducationData from(Education c) {
         return new EducationData(
-               c.getName(),c.getLevel()
+               c.getName(),c.getLevel(),c.getId()
         );
     }
 
     public Education fromThis() {
         return new Education(
-                this.name,this.level
+                this.name,this.level,this.id
         );
     }
 

@@ -2,10 +2,7 @@ package core.usecase.discography;
 
 import core.domain.Album;
 import core.domain.Discography;
-import core.domain.Event;
 import core.usecase.UseCase;
-import core.usecase.event.AddEventUseCase;
-import core.usecase.event.EventRepository;
 
 import java.util.List;
 
@@ -20,23 +17,33 @@ public class AddDiscographyUseCase extends UseCase<AddDiscographyUseCase.InputVa
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        Discography discography=new Discography(
-                input.getAlbumList()
+        Discography discography = new Discography(
+
+                input.getDiscographyId(), input.getAlbumList()
         );
+
+        repository.save(discography);
+
 
         return new AddDiscographyUseCase.OutputValues(discography);
 
     }
 
     public static class InputValues implements UseCase.InputValues {
-        private final  List<Album> albumList;;
+        private final List<Album> albumList;
+        private final Long discographyId;
 
-        public InputValues(List<Album> albumList) {
+        public InputValues(List<Album> albumList, Long discographyId) {
             this.albumList = albumList;
+            this.discographyId = discographyId;
         }
 
         public List<Album> getAlbumList() {
             return albumList;
+        }
+
+        public Long getDiscographyId() {
+            return discographyId;
         }
     }
 

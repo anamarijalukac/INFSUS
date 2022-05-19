@@ -17,7 +17,7 @@ public class UpdateOrchestraUseCase extends UseCase<UpdateOrchestraUseCase.Input
 
     @Override
     public OutputValues execute(InputValues input) {
-        Orchestra orchestra=repository.findByName(input.getName());
+        Orchestra orchestra=repository.getById(input.getOrchestraId());
         if(input.getName()!=null)
             orchestra.setName(input.getName());
 
@@ -59,7 +59,15 @@ public class UpdateOrchestraUseCase extends UseCase<UpdateOrchestraUseCase.Input
         private Discography discography=null;
         private List<Event> events=null;
         private List<Registration> registrations=null;
+        private final Long orchestraId;
 
+        public InputValues(Long orchestraId) {
+            this.orchestraId = orchestraId;
+        }
+
+        public Long getOrchestraId() {
+            return orchestraId;
+        }
 
         public String getName() {
             return name;

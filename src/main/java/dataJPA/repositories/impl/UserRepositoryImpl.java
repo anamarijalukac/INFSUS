@@ -23,14 +23,16 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
+
+
     @Override
-    public boolean existsByEmail(String email) {
-        return repository.existsByEmail(email);
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 
     @Override
-    public User findByEmail(String email) {
-        return repository.findByEmail(email).fromThis();
+    public User findById(Long id) {
+        return repository.findById(id).get().fromThis();
     }
 
     @Override

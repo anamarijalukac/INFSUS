@@ -4,10 +4,20 @@ public class Education {
 
     private String name;
     private String level;
+    private Long id;
 
-    public Education(String name, String level) {
+    public Education(String name, String level, Long id) {
         this.name = name;
         this.level = level;
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

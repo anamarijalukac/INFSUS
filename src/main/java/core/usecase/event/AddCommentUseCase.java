@@ -16,10 +16,11 @@ public class AddCommentUseCase extends UseCase<AddCommentUseCase.InputValues, Ad
     public OutputValues execute(InputValues input) throws Exception {
         Comment comment=new Comment(
                 input.getCommentText(),
-                input.getCommentatorName()
+                input.getCommentatorName(),
+                input.getEventId()
         );
 
-        Event e=eventRepo.findByName(input.event.getName());
+        Event e=eventRepo.getEventById(input.getEventId());
         e.getComments().add(comment);
         eventRepo.save(e);
 
@@ -32,12 +33,15 @@ public class AddCommentUseCase extends UseCase<AddCommentUseCase.InputValues, Ad
 
         private final String commentText;
         private final String commentatorName;
-        private final Event event;
+        private final Long commentId;
+        private final Long eventId;
 
-        public InputValues(String commentText, String commentatorName, Event event) {
+
+        public InputValues(String commentText, String commentatorName, Long commentId, Long eventId) {
             this.commentText = commentText;
             this.commentatorName = commentatorName;
-            this.event = event;
+            this.commentId = commentId;
+            this.eventId = eventId;
         }
 
         public String getCommentText() {
@@ -48,8 +52,12 @@ public class AddCommentUseCase extends UseCase<AddCommentUseCase.InputValues, Ad
             return commentatorName;
         }
 
-        public Event getEvent() {
-            return event;
+        public Long getCommentId() {
+            return commentId;
+        }
+
+        public Long getEventId() {
+            return eventId;
         }
     }
 

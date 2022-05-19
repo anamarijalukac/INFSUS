@@ -15,10 +15,20 @@ public class Orchestra {
     private List<Registration> registrations;
     private User leader;
 
-    public Orchestra(String name, Date founded_date) {
-        this.name = name;
-        this.founded_date=founded_date;
+    private Long id;
 
+    public Orchestra(String name, Date founded_date, Long id) {
+        this.name = name;
+        this.founded_date = founded_date;
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getLeader() {

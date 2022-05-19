@@ -4,6 +4,7 @@ package core.domain;
 import java.util.List;
 
 public class User {
+        private Long id;
 
         private String name;
         private String email;
@@ -17,11 +18,22 @@ public class User {
         private String status;
         private Orchestra orchestra;
 
-        public User(String name, String address,String email, String password) {
+        public User(Long id, String name, String email, String address, String password) {
+                this.id = id;
                 this.name = name;
                 this.email = email;
+                this.address = address;
                 this.password = password;
-                this.address=address;
+                this.setStatus("USER");
+        }
+
+
+        public Long getId() {
+                return id;
+        }
+
+        public void setId(Long id) {
+                this.id = id;
         }
 
         public Orchestra getOrchestra() {

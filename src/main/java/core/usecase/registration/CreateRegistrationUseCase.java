@@ -4,6 +4,7 @@ import core.domain.Orchestra;
 import core.domain.Registration;
 import core.domain.User;
 import core.usecase.UseCase;
+import core.usecase.orchestra.OrchestraRepository;
 import core.usecase.user.CreateUserUseCase;
 import core.usecase.user.UserRepository;
 
@@ -11,31 +12,37 @@ import java.util.Date;
 
 public class CreateRegistrationUseCase extends UseCase<CreateRegistrationUseCase.InputValues, CreateRegistrationUseCase.OutputValues> {
 
-    private final RegistrationRepository repository;
+    private final RegistrationRepository registrationRepository;
     private final UserRepository userRepo;
+    private final OrchestraRepository orchestraRepository;
 
-    public CreateRegistrationUseCase(RegistrationRepository repository, UserRepository userRepo) {
-        this.repository = repository;
+    public CreateRegistrationUseCase(RegistrationRepository registrationRepository, UserRepository userRepo, OrchestraRepository orchestraRepository) {
+        this.registrationRepository = registrationRepository;
         this.userRepo = userRepo;
+        this.orchestraRepository = orchestraRepository;
     }
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        if (repository.existsByUserAndOrchestra(input.getUser(), input.getOrchestra())) {
+        if (registrationRepository.existsById(input.getRegistrationId())) {
             throw new Exception("Registration already exists!");
         }
 
-        if (repository.ifUserIsMember(input.getUser(), input.getOrchestra())) {
-            throw new Exception("This user is already a member!");
-        }
+
+
+        User user=userRepo.findById(input.getUserId());
+        Orchestra orchestra=orchestraRepository.getById(input.getOrchestraId());
 
         Registration registration = new Registration(
-                input.getUser(),
-                input.getOrchestra(),
-                input.getDate()
+               user,orchestra,
+                input.getDate(), input.getRegistrationId()
         );
 
-        //userRepo.addRegistration( input.getUser(),registration);
+        registrationRepository.save(registration);
+        user.getRegistrationList().add(registration);
+        userRepo.save(user);
+        orchestra.getRegistrations().add(registration);
+        orchestraRepository.save(orchestra);
 
         return new CreateRegistrationUseCase.OutputValues(registration);
 
@@ -44,27 +51,32 @@ public class CreateRegistrationUseCase extends UseCase<CreateRegistrationUseCase
 
 
     public static class InputValues implements UseCase.InputValues {
-        private final User user;
-        private final Orchestra orchestra;
+        private final Long userId;
         private final Date date;
+        private final Long orchestraId;
+        private final Long registrationId;
 
-        public InputValues(User user, Orchestra orchestra, Date date) {
-            this.user = user;
-            this.orchestra = orchestra;
+        public InputValues(Long userId, Date date, Long orchestraId, Long registrationId) {
+            this.userId = userId;
             this.date = date;
+            this.orchestraId = orchestraId;
+            this.registrationId = registrationId;
+        }
 
+        public Long getUserId() {
+            return userId;
         }
 
         public Date getDate() {
             return date;
         }
 
-        public User getUser() {
-            return user;
+        public Long getOrchestraId() {
+            return orchestraId;
         }
 
-        public Orchestra getOrchestra() {
-            return orchestra;
+        public Long getRegistrationId() {
+            return registrationId;
         }
     }
 

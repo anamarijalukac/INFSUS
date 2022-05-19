@@ -20,9 +20,13 @@ public class DiscographyData {
     @OneToMany(mappedBy = "discography")
     private List<AlbumData> albumList;
 
-    public DiscographyData(List<AlbumData> albumList) {
-
+    public DiscographyData(Long id, List<AlbumData> albumList) {
+        this.id = id;
         this.albumList = albumList;
+    }
+
+    protected DiscographyData() {
+
     }
 
     public static DiscographyData from(Discography d) {
@@ -31,7 +35,7 @@ public class DiscographyData {
         for (Album a : list) {
             l.add(AlbumData.from(a));
         }
-        return new DiscographyData(l);
+        return new DiscographyData(d.getId(),l);
     }
 
     public Discography fromThis() {
@@ -41,7 +45,7 @@ public class DiscographyData {
             l.add(a.fromThis());
         }
 
-        return new Discography(l
+        return new Discography(this.id,l
         );
     }
 

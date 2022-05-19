@@ -6,11 +6,16 @@ import core.domain.User;
 
 public interface OrchestraRepository {
 
-    boolean existsByName(String name);
+    boolean existsById(Long id);
 
-    Orchestra findByName(String name);
+    Orchestra getById(Long id);
 
     Orchestra save(Orchestra orchestra);
+
+
+
+
+
 
 
 }

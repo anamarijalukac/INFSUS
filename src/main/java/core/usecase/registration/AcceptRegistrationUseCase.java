@@ -23,14 +23,21 @@ public class AcceptRegistrationUseCase extends UseCase<AcceptRegistrationUseCase
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        if (!registrationRepo.existsByUserAndOrchestra(input.getUser(), input.getOrchestra())) {
+        if (!registrationRepo.existsById(input.getRegistrationId())) {
             throw new Exception("Registration does not exist!");
         }
 
-        Registration registration=registrationRepo.findByUserAndOrchestra(input.getUser(),input.getOrchestra());
+        Registration registration=registrationRepo.findById(input.getRegistrationId());
+        User user=userRepo.findById(input.getUserId());
+        Orchestra orchestra=orchestraRepo.getById(input.getOrchestraId());
+
         registration.setAcceptedStatus(true);
-        //userRepo.addOrchestra(input.getUser(),input.getOrchestra());
-        //orchestraRepo.addMember(input.getUser());
+        user.setOrchestra(orchestra);
+        orchestra.getMembers().add(user);
+
+        userRepo.save(user);
+        orchestraRepo.save(orchestra);
+        registrationRepo.save(registration);
 
         return new AcceptRegistrationUseCase.OutputValues(registration);
 
@@ -42,12 +49,16 @@ public class AcceptRegistrationUseCase extends UseCase<AcceptRegistrationUseCase
     public static class InputValues implements UseCase.InputValues {
         private final User user;
         private final Orchestra orchestra;
+        private final Long registrationId;
+        private final Long userId;
+        private final Long orchestraId;
 
-        public InputValues(User user, Orchestra orchestra, Date date) {
+        public InputValues(User user, Orchestra orchestra, Long registrationId, Long userId, Long orchestraId) {
             this.user = user;
             this.orchestra = orchestra;
-
-
+            this.registrationId = registrationId;
+            this.userId = userId;
+            this.orchestraId = orchestraId;
         }
 
         public User getUser() {
@@ -56,6 +67,18 @@ public class AcceptRegistrationUseCase extends UseCase<AcceptRegistrationUseCase
 
         public Orchestra getOrchestra() {
             return orchestra;
+        }
+
+        public Long getRegistrationId() {
+            return registrationId;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public Long getOrchestraId() {
+            return orchestraId;
         }
     }
 

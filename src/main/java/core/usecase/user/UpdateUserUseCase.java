@@ -19,7 +19,7 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
 
     @Override
     public OutputValues execute(InputValues input) throws Exception {
-        User user=repository.findByEmail(input.getEmail());
+        User user=repository.findById(input.getUserId());
 
         if(input.getName()!=null)
             user.setName(input.getName());
@@ -40,6 +40,8 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
         if(input.getOrchestra()!=null)
             user.setOrchestra(input.getOrchestra());
 
+        repository.save(user);
+
         return new UpdateUserUseCase.OutputValues(user);
 
 
@@ -55,6 +57,15 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
         private List<Registration> registrationList=null;
         private String status=null;
         private Orchestra orchestra=null;
+        private final Long userId;
+
+        public InputValues(Long userId) {
+            this.userId = userId;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
 
         public String getName() {
             return name;

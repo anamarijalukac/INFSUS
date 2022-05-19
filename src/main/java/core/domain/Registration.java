@@ -9,15 +9,22 @@ public class Registration {
     private Orchestra orchestra;
     private Date date;
 
-    public Registration( User user, Orchestra orchestra,Date date) {
-        this.acceptedStatus = false;
+    private Long id;
+
+    public Registration(User user, Orchestra orchestra, Date date, Long id) {
         this.user = user;
         this.orchestra = orchestra;
-        this.date=date;
+        this.date = date;
+        this.id = id;
     }
 
-    public Registration() {
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean isAcceptedStatus() {

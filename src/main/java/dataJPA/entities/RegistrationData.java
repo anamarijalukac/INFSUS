@@ -30,11 +30,12 @@ public class RegistrationData {
     @JoinColumn(name="orchestra_id")
     private OrchestraData orchestra;
 
-    public RegistrationData(UserData user, OrchestraData orchestra, Date date) {
+    public RegistrationData(UserData user, OrchestraData orchestra, Date date,Long id) {
         this.acceptedStatus = false;
         this.user = user;
         this.orchestra = orchestra;
         this.date = date;
+        this.id=id;
     }
 
     protected RegistrationData(){}
@@ -43,14 +44,14 @@ public class RegistrationData {
 
 
         return new RegistrationData(
-                UserData.from(c.getUser()),OrchestraData.from(c.getOrchestra()),c.getDate()
+                UserData.from(c.getUser()),OrchestraData.from(c.getOrchestra()),c.getDate(),c.getId()
 
         );
     }
 
     public Registration fromThis() {
         return new Registration(
-                this.user.fromThis(),this.orchestra.fromThis(),this.date
+                this.user.fromThis(),this.orchestra.fromThis(),this.date,this.id
         );
     }
 }

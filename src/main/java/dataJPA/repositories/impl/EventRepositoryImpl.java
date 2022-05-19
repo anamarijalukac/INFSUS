@@ -7,10 +7,14 @@ import dataJPA.entities.EventData;
 import dataJPA.entities.UserData;
 import dataJPA.repositories.interfaces.JpaEventRepository;
 import dataJPA.repositories.interfaces.JpaUserRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+@Repository
 public class EventRepositoryImpl implements EventRepository {
 
-    private JpaEventRepository repository;
+    private final JpaEventRepository repository;
 
     public EventRepositoryImpl(JpaEventRepository repository) {
         this.repository = repository;
@@ -18,20 +22,26 @@ public class EventRepositoryImpl implements EventRepository {
 
 
     @Override
-    public boolean existsByName(String name) {
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
 
-        return repository.existsByName(name);
     }
 
     @Override
-    public Event findByName(String name) {
-        return repository.findByName(name).fromThis();
+    public Event getEventById(Long id) {
+        return repository.findById(id).get().fromThis();
     }
 
     @Override
     public Event save(Event event) {
         final EventData eventData = EventData.from(event);
         return repository.save(eventData).fromThis();
+    }
+
+    @Override
+    public List<Comment> getAllComments(Long id) {
+        Event event=repository.findById(id).get().fromThis();
+        return event.getComments();
     }
 
 

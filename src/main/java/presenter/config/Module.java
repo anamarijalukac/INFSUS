@@ -1,20 +1,18 @@
 package presenter.config;
 
 
-import core.usecase.discography.AddAlbumUseCase;
-import core.usecase.discography.AddDiscographyUseCase;
-import core.usecase.discography.AddSongUseCase;
-import core.usecase.discography.DiscographyRepository;
-import core.usecase.event.AddCommentUseCase;
-import core.usecase.event.AddEventUseCase;
-import core.usecase.event.EventRepository;
+import core.usecase.discography.*;
+import core.usecase.event.*;
 import core.usecase.orchestra.CreateOrchestraUseCase;
+import core.usecase.orchestra.GetOrchestraUseCase;
 import core.usecase.orchestra.OrchestraRepository;
 import core.usecase.orchestra.UpdateOrchestraUseCase;
 import core.usecase.registration.AcceptRegistrationUseCase;
 import core.usecase.registration.CreateRegistrationUseCase;
+import core.usecase.registration.GetRegistrationUseCase;
 import core.usecase.registration.RegistrationRepository;
 import core.usecase.user.CreateUserUseCase;
+import core.usecase.user.GetUserUseCase;
 import core.usecase.user.UpdateUserUseCase;
 import core.usecase.user.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -34,18 +32,34 @@ public class Module {
     }
 
     @Bean
+    public GetUserUseCase getUserUseCase(UserRepository repository) {
+        return new GetUserUseCase(repository);
+    }
+
+
+    @Bean
     public AcceptRegistrationUseCase acceptRegistrationUseCase(RegistrationRepository registrationRepo, UserRepository userRepo, OrchestraRepository orchestraRepo) {
         return new AcceptRegistrationUseCase(registrationRepo, userRepo, orchestraRepo);
     }
 
     @Bean
-    public CreateRegistrationUseCase createRegistrationUseCase(RegistrationRepository registrationRepo, UserRepository userRepo) {
-        return new CreateRegistrationUseCase(registrationRepo, userRepo);
+    public CreateRegistrationUseCase createRegistrationUseCase(RegistrationRepository registrationRepo, UserRepository userRepo, OrchestraRepository orchestraRepo) {
+        return new CreateRegistrationUseCase(registrationRepo, userRepo,orchestraRepo);
+    }
+
+    @Bean
+    public GetRegistrationUseCase getRegistrationUseCase(RegistrationRepository registrationRepo) {
+        return new GetRegistrationUseCase(registrationRepo);
     }
 
     @Bean
     public CreateOrchestraUseCase createOrchestraUseCase(OrchestraRepository orchestraRepository) {
         return new CreateOrchestraUseCase(orchestraRepository);
+    }
+
+    @Bean
+    public GetOrchestraUseCase getOrchestraUseCase(OrchestraRepository orchestraRepository) {
+        return new GetOrchestraUseCase(orchestraRepository);
     }
 
     @Bean
@@ -64,6 +78,17 @@ public class Module {
     }
 
     @Bean
+    public GetCommentsUseCase getCommentsUseCase(EventRepository eventRepo) {
+        return new GetCommentsUseCase(eventRepo);
+    }
+
+    @Bean
+    public GetEventUseCase getEventUseCase(EventRepository eventRepo) {
+        return new GetEventUseCase(eventRepo);
+    }
+
+
+    @Bean
     public AddAlbumUseCase addAlbumUseCase(DiscographyRepository repository) {
         return new AddAlbumUseCase(repository);
     }
@@ -76,6 +101,16 @@ public class Module {
     @Bean
     public AddSongUseCase addSongUseCase(DiscographyRepository repository) {
         return new AddSongUseCase(repository);
+    }
+
+    @Bean
+    public GetAlbumByIdUseCase getAlbumByIdUseCase(DiscographyRepository repository) {
+        return new GetAlbumByIdUseCase(repository);
+    }
+
+    @Bean
+    public GetDiscographyByIdUseCase getDiscographyByIdUseCase(DiscographyRepository repository) {
+        return new GetDiscographyByIdUseCase(repository);
     }
 
 

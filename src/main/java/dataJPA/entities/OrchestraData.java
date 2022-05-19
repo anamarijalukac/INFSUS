@@ -41,9 +41,10 @@ public class OrchestraData {
 
 
 
-    public OrchestraData(String name, Date founded_date) {
+    public OrchestraData(String name, Date founded_date,Long id) {
         this.name = name;
         this.founded_date = founded_date;
+        this.id = id;
     }
 
     protected OrchestraData() {
@@ -51,13 +52,13 @@ public class OrchestraData {
 
     public static OrchestraData from(Orchestra c) {
         return new OrchestraData(
-               c.getName(),c.getFounded_date()
+               c.getName(),c.getFounded_date(),c.getId()
         );
     }
 
     public Orchestra fromThis() {
         return new Orchestra(
-                this.name,this.founded_date
+                this.name,this.founded_date,this.id
         );
     }
 

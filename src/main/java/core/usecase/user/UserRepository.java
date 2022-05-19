@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface UserRepository {
 
 
-    boolean existsByEmail(String email);
+    boolean existsById(Long id);
 
-    User findByEmail(String email);
+    User findById(Long id);
 
 
     User save(User user);

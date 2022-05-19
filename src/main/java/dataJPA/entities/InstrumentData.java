@@ -22,19 +22,20 @@ public class InstrumentData {
     @Column(unique = true, nullable = false)
     private String name;
 
-    public InstrumentData(String name) {
+    public InstrumentData(String name,Long id) {
         this.name = name;
+        this.id=id;
     }
 
     public static InstrumentData from(Instrument c) {
         return new InstrumentData(
-                c.getName()
+                c.getName(),c.getId()
         );
     }
 
     public Instrument fromThis() {
         return new Instrument(
-                this.name
+                this.name,this.id
         );
     }
 

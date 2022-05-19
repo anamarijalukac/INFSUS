@@ -26,21 +26,26 @@ public class SongData {
     @JoinColumn(name="album_id")
     private AlbumData album;
 
-    public SongData(String name, Date date, String artist) {
+    public SongData(String name, Date date, String artist,Long id) {
         this.name = name;
         this.date = date;
         this.artist = artist;
+        this.id=id;
+    }
+
+    protected SongData() {
+
     }
 
     public static SongData from(Song c) {
         return new SongData(
-                c.getName(),c.getDate(),c.getArtist()
+                c.getName(),c.getDate(),c.getArtist(),c.getId()
         );
     }
 
     public Song fromThis() {
         return new Song(
-                this.name,this.date,this.artist
+                this.name,this.date,this.artist,this.id
         );
     }
 
