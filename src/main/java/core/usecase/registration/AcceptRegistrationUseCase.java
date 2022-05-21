@@ -1,5 +1,6 @@
 package core.usecase.registration;
 
+import core.domain.NotFoundException;
 import core.domain.Orchestra;
 import core.domain.Registration;
 import core.domain.User;
@@ -21,9 +22,9 @@ public class AcceptRegistrationUseCase extends UseCase<AcceptRegistrationUseCase
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         if (!registrationRepo.existsById(input.getRegistrationId())) {
-            throw new Exception("Registration does not exist!");
+            throw new NotFoundException("Registration does not exist!");
         }
 
         Registration registration = registrationRepo.findById(input.getRegistrationId());

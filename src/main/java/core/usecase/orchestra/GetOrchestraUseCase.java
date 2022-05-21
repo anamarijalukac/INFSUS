@@ -1,5 +1,6 @@
 package core.usecase.orchestra;
 
+import core.domain.NotFoundException;
 import core.domain.Orchestra;
 import core.usecase.UseCase;
 import lombok.Value;
@@ -13,13 +14,13 @@ public class GetOrchestraUseCase extends UseCase<GetOrchestraUseCase.InputValues
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         final Long id = input.getOrchestraId();
 
         Orchestra orchestra = repository.getById(id);
 
         if (orchestra == null) {
-            throw new Exception("Orchestra " + id + " not found");
+            throw new NotFoundException("Orchestra " + id + " not found");
         }
 
         return new OutputValues(orchestra);

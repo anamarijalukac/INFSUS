@@ -1,6 +1,7 @@
 package core.usecase.event;
 
 import core.domain.Event;
+import core.domain.NotFoundException;
 import core.usecase.UseCase;
 import lombok.Value;
 
@@ -13,13 +14,13 @@ public class GetEventUseCase extends UseCase<GetEventUseCase.InputValues, GetEve
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         final Long id = input.getEventId();
 
         Event event = repository.getEventById(id);
 
         if (event == null) {
-            throw new Exception("Event " + id + " not found");
+            throw new NotFoundException("Event " + id + " not found");
         }
 
         return new OutputValues(event);

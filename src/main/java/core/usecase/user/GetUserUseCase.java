@@ -1,5 +1,6 @@
 package core.usecase.user;
 
+import core.domain.NotFoundException;
 import core.domain.User;
 import core.usecase.UseCase;
 import lombok.Value;
@@ -13,13 +14,13 @@ public class GetUserUseCase extends UseCase<GetUserUseCase.InputValues, GetUserU
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         final Long id = input.getUserId();
 
         User user = repository.findById(id);
 
         if (user == null) {
-            throw new Exception("User " + id + " not found");
+            throw new NotFoundException("User " + id + " not found");
         }
 
         return new OutputValues(user);

@@ -1,5 +1,6 @@
 package core.usecase.registration;
 
+import core.domain.AlreadyExistsException;
 import core.domain.Orchestra;
 import core.domain.Registration;
 import core.domain.User;
@@ -23,9 +24,9 @@ public class CreateRegistrationUseCase extends UseCase<CreateRegistrationUseCase
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         if (registrationRepository.existsById(input.getRegistrationId())) {
-            throw new Exception("Registration already exists!");
+            throw new AlreadyExistsException("Registration already exists!");
         }
 
         User user = userRepo.findById(input.getUserId());

@@ -16,7 +16,7 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
 
 
         Album album = new Album();

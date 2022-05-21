@@ -16,7 +16,7 @@ public class AddDiscographyUseCase extends UseCase<AddDiscographyUseCase.InputVa
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         Discography discography = new Discography();
         discography.setAlbumList(input.getAlbumList());
         discography.setId(input.getDiscographyId());

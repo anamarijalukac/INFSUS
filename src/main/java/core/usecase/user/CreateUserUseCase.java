@@ -1,5 +1,6 @@
 package core.usecase.user;
 
+import core.domain.AlreadyExistsException;
 import core.domain.User;
 import core.usecase.UseCase;
 import lombok.Value;
@@ -13,9 +14,9 @@ public class CreateUserUseCase extends UseCase<CreateUserUseCase.InputValues, Cr
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         if (repository.existsById(input.getUserId())) {
-            throw new Exception("Email address already in use!");
+            throw new AlreadyExistsException("Email address already in use!");
         }
 
         User user = new User();

@@ -16,7 +16,7 @@ public class UpdateUserUseCase extends UseCase<UpdateUserUseCase.InputValues, Up
 
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         User user=repository.findById(input.getUserId());
 
         if(input.getName()!=null)

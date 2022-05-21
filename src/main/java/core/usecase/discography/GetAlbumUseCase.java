@@ -1,6 +1,7 @@
 package core.usecase.discography;
 
 import core.domain.Album;
+import core.domain.NotFoundException;
 import core.usecase.UseCase;
 import lombok.Value;
 
@@ -14,13 +15,13 @@ public class GetAlbumUseCase extends UseCase<GetAlbumUseCase.InputValues, GetAlb
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         final Long id = input.getAlbumId();
 
         Album album = repository.getAlbumById(id);
 
         if (album == null) {
-            throw new Exception("Album " + id + " not found");
+            throw new NotFoundException("Album " + id + " not found");
         }
 
         return new OutputValues(album);

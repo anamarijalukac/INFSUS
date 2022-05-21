@@ -14,7 +14,7 @@ public class AddCommentUseCase extends UseCase<AddCommentUseCase.InputValues, Ad
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         Comment comment = new Comment();
         comment.setCommentText(input.getCommentText());
 

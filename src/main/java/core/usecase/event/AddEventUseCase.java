@@ -1,5 +1,6 @@
 package core.usecase.event;
 
+import core.domain.AlreadyExistsException;
 import core.domain.Event;
 import core.domain.Orchestra;
 import core.usecase.UseCase;
@@ -20,9 +21,9 @@ public class AddEventUseCase extends UseCase<AddEventUseCase.InputValues, AddEve
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         if (!eventRepo.existsById(input.getEventId())) {
-            throw new Exception("This event already exists!");
+            throw new AlreadyExistsException("This event already exists!");
         }
 
         Event event = new Event();

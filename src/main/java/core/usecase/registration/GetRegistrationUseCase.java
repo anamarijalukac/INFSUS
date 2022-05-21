@@ -1,5 +1,6 @@
 package core.usecase.registration;
 
+import core.domain.NotFoundException;
 import core.domain.Registration;
 import core.usecase.UseCase;
 import lombok.Value;
@@ -13,13 +14,13 @@ public class GetRegistrationUseCase extends UseCase<GetRegistrationUseCase.Input
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         final Long id = input.getRegistrationId();
 
         Registration registration = repository.findById(id);
 
         if (registration == null) {
-            throw new Exception("Registration " + id + " not found");
+            throw new NotFoundException("Registration " + id + " not found");
         }
 
         return new OutputValues(registration);

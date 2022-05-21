@@ -17,7 +17,7 @@ public class AddSongUseCase extends UseCase<AddSongUseCase.InputValues, AddSongU
     }
 
     @Override
-    public OutputValues execute(InputValues input) throws Exception {
+    public OutputValues execute(InputValues input) {
         Song song = new Song();
         song.setArtist(input.getArtist());
         song.setDate(input.getDate());
