@@ -6,6 +6,10 @@ import dataJPA.entities.OrchestraData;
 import dataJPA.repositories.interfaces.JpaOrchestraRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 @Repository
 public class OrchestraRepositoryImpl implements OrchestraRepository {
 
@@ -15,6 +19,14 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
         this.repository = repository;
     }
 
+
+    @Override
+    public List<Orchestra> getAll() {
+        return StreamSupport
+                .stream(repository.findAll().spliterator(), false)
+                .map(OrchestraData::fromThis)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public boolean existsById(Long id) {

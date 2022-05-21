@@ -3,10 +3,7 @@ package presenter.config;
 
 import core.usecase.discography.*;
 import core.usecase.event.*;
-import core.usecase.orchestra.CreateOrchestraUseCase;
-import core.usecase.orchestra.GetOrchestraUseCase;
-import core.usecase.orchestra.OrchestraRepository;
-import core.usecase.orchestra.UpdateOrchestraUseCase;
+import core.usecase.orchestra.*;
 import core.usecase.registration.AcceptRegistrationUseCase;
 import core.usecase.registration.CreateRegistrationUseCase;
 import core.usecase.registration.GetRegistrationUseCase;
@@ -113,6 +110,9 @@ public class Module {
         return new GetDiscographyUseCase(repository);
     }
 
-
+    @Bean
+    public GetOrchestrasUseCase getOrchestrasUseCase(OrchestraRepository orchestraRepository) {
+        return new GetOrchestrasUseCase(orchestraRepository);
+    }
 
 }
