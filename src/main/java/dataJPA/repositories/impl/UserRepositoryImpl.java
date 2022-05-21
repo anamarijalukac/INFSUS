@@ -1,22 +1,16 @@
 package dataJPA.repositories.impl;
 
 
-import core.domain.Orchestra;
-import core.domain.Registration;
 import core.domain.User;
 import core.usecase.user.UserRepository;
-import dataJPA.entities.OrchestraData;
-import dataJPA.entities.RegistrationData;
 import dataJPA.entities.UserData;
 import dataJPA.repositories.interfaces.JpaUserRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private JpaUserRepository repository;
+    private final JpaUserRepository repository;
 
     public UserRepositoryImpl(JpaUserRepository repository) {
         this.repository = repository;

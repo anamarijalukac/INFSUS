@@ -3,6 +3,7 @@ package core.usecase.discography;
 import core.domain.Album;
 import core.domain.Discography;
 import core.usecase.UseCase;
+import lombok.Value;
 
 import java.time.Year;
 
@@ -18,23 +19,20 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
     public OutputValues execute(InputValues input) throws Exception {
 
 
-        Album album=new Album(input.getGenre(),input.getYear(),input.getName(), input.getAlbumId());
+        Album album = new Album();
 
-        Discography discography= repository.getDiscographyById(input.getDiscographyId());
+        album.setId(input.getAlbumId());
+        album.setName(input.getName());
+        album.setGenre(input.getGenre());
+        album.setYear(input.getYear());
+
+        Discography discography = repository.getDiscographyById(input.getDiscographyId());
 
         discography.getAlbumList().add(album);
 
         repository.save(discography);
 
-
-
-
-
         return new AddAlbumUseCase.OutputValues(album);
-
-
-
-
     }
 
     public static class InputValues implements UseCase.InputValues {
@@ -74,15 +72,10 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
         public String getName() {
             return name;
         }
-
-
     }
 
+    @Value
     public static class OutputValues implements UseCase.OutputValues {
-        private final Album album;
-
-        public OutputValues(Album album) {
-            this.album = album;
-        }
+        Album album;
     }
 }

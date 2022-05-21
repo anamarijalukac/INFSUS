@@ -2,16 +2,14 @@ package dataJPA.repositories.impl;
 
 import core.domain.Orchestra;
 import core.usecase.orchestra.OrchestraRepository;
-import dataJPA.entities.EventData;
 import dataJPA.entities.OrchestraData;
-import dataJPA.repositories.interfaces.JpaEventRepository;
 import dataJPA.repositories.interfaces.JpaOrchestraRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrchestraRepositoryImpl implements OrchestraRepository {
 
-    private JpaOrchestraRepository repository;
+    private final JpaOrchestraRepository repository;
 
     public OrchestraRepositoryImpl(JpaOrchestraRepository repository) {
         this.repository = repository;

@@ -1,113 +1,35 @@
 package core.domain;
 
+import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class Orchestra {
 
+    private Long id;
     private String name;
     private Date founded_date;
     private String web_page;
 
-    private List<User> members;
+    private List<User> members = new ArrayList<>();
     private Discography discography;
-    private List<Event> events;
-    private List<Registration> registrations;
+    private List<Event> events = new ArrayList<>();
+    private List<Registration> registrations = new ArrayList<>();
     private User leader;
-
-    private Long id;
-
-    public Orchestra(String name, Date founded_date, Long id) {
-        this.name = name;
-        this.founded_date = founded_date;
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getLeader() {
-        return leader;
-    }
-
-    public void setLeader(User leader) {
-        this.leader = leader;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getFounded_date() {
-        return founded_date;
-    }
-
-    public void setFounded_date(Date founded_date) {
-        this.founded_date = founded_date;
-    }
-
-    public String getWeb_page() {
-        return web_page;
-    }
-
-    public void setWeb_page(String web_page) {
-        this.web_page = web_page;
-    }
-
-    public List<User> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<User> members) {
-        this.members = members;
-    }
 
     public void addMember(User member) {
         this.members.add(member);
-    }
-
-    public Discography getDiscography() {
-        return discography;
-    }
-
-    public void setDiscography(Discography discography) {
-        this.discography = discography;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
     }
 
     public void addEvent(Event e) {
         this.events.add(e);
     }
 
-    public List<Registration> getRegistrations() {
-        return registrations;
-    }
-
-    public void setRegistrations(List<Registration> registrations) {
-        this.registrations = registrations;
-    }
-
     public void addRegistration(Registration r) {
         this.registrations.add(r);
     }
-
-
-
 
 }

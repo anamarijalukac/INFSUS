@@ -5,8 +5,8 @@ import core.domain.Registration;
 import core.domain.User;
 import core.usecase.UseCase;
 import core.usecase.orchestra.OrchestraRepository;
-import core.usecase.user.CreateUserUseCase;
 import core.usecase.user.UserRepository;
+import lombok.Value;
 
 import java.util.Date;
 
@@ -28,15 +28,15 @@ public class CreateRegistrationUseCase extends UseCase<CreateRegistrationUseCase
             throw new Exception("Registration already exists!");
         }
 
+        User user = userRepo.findById(input.getUserId());
+        Orchestra orchestra = orchestraRepository.getById(input.getOrchestraId());
 
+        Registration registration = new Registration();
 
-        User user=userRepo.findById(input.getUserId());
-        Orchestra orchestra=orchestraRepository.getById(input.getOrchestraId());
-
-        Registration registration = new Registration(
-               user,orchestra,
-                input.getDate(), input.getRegistrationId()
-        );
+        registration.setDate(input.getDate());
+        registration.setId(input.getRegistrationId());
+        registration.setOrchestra(orchestra);
+        registration.setUser(user);
 
         registrationRepository.save(registration);
         user.getRegistrationList().add(registration);
@@ -45,48 +45,19 @@ public class CreateRegistrationUseCase extends UseCase<CreateRegistrationUseCase
         orchestraRepository.save(orchestra);
 
         return new CreateRegistrationUseCase.OutputValues(registration);
-
-
     }
 
 
+    @Value
     public static class InputValues implements UseCase.InputValues {
-        private final Long userId;
-        private final Date date;
-        private final Long orchestraId;
-        private final Long registrationId;
-
-        public InputValues(Long userId, Date date, Long orchestraId, Long registrationId) {
-            this.userId = userId;
-            this.date = date;
-            this.orchestraId = orchestraId;
-            this.registrationId = registrationId;
-        }
-
-        public Long getUserId() {
-            return userId;
-        }
-
-        public Date getDate() {
-            return date;
-        }
-
-        public Long getOrchestraId() {
-            return orchestraId;
-        }
-
-        public Long getRegistrationId() {
-            return registrationId;
-        }
+        Long userId;
+        Date date;
+        Long orchestraId;
+        Long registrationId;
     }
 
+    @Value
     public static class OutputValues implements UseCase.OutputValues {
-        private final Registration registration;
-
-        public OutputValues(Registration registration) {
-            this.registration = registration;
-        }
+        Registration registration;
     }
-
-
 }

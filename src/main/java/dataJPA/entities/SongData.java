@@ -1,14 +1,22 @@
 package dataJPA.entities;
 
-import core.domain.Album;
-import core.domain.Comment;
 import core.domain.Song;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "song")
 @Table(name = "song")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class SongData {
 
     @Id
@@ -23,69 +31,37 @@ public class SongData {
     private String artist;
 
     @ManyToOne
-    @JoinColumn(name="album_id")
+    @JoinColumn(name = "album_id")
     private AlbumData album;
 
-    public SongData(String name, Date date, String artist,Long id) {
-        this.name = name;
-        this.date = date;
-        this.artist = artist;
-        this.id=id;
-    }
-
-    protected SongData() {
-
-    }
-
-    public static SongData from(Song c) {
-        return new SongData(
-                c.getName(),c.getDate(),c.getArtist(),c.getId()
-        );
+    public static SongData from(Song song) {
+        SongData songData = new SongData();
+        songData.setDate(song.getDate());
+        songData.setArtist(song.getArtist());
+        songData.setName(song.getName());
+        songData.setId(song.getId());
+        return songData;
     }
 
     public Song fromThis() {
-        return new Song(
-                this.name,this.date,this.artist,this.id
-        );
+        Song song = new Song();
+        song.setName(this.getName());
+        song.setDate(this.getDate());
+        song.setArtist(this.getArtist());
+        song.setId(this.getId());
+        return song;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SongData songData = (SongData) o;
+        return id != null && Objects.equals(id, songData.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public AlbumData getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(AlbumData album) {
-        this.album = album;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

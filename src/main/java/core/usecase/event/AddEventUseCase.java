@@ -4,7 +4,7 @@ import core.domain.Event;
 import core.domain.Orchestra;
 import core.usecase.UseCase;
 import core.usecase.orchestra.OrchestraRepository;
-import core.usecase.orchestra.UpdateOrchestraUseCase;
+import lombok.Value;
 
 import java.util.Date;
 
@@ -25,71 +25,33 @@ public class AddEventUseCase extends UseCase<AddEventUseCase.InputValues, AddEve
             throw new Exception("This event already exists!");
         }
 
-        Event event=new Event(
-                input.getEventId(),
-                input.getName(),
-                input.getDescription(),
-                input.getType(),
-                input.getDate()
+        Event event = new Event();
+        event.setDate(input.getDate());
+        event.setDescription(input.getDescription());
+        event.setId(input.getEventId());
+        event.setName(input.getName());
+        event.setType(input.getType());
 
-        );
-
-        Orchestra orchestra=orchestraRepo.getById(input.getOrchestraId());
+        Orchestra orchestra = orchestraRepo.getById(input.getOrchestraId());
         orchestra.getEvents().add(event);
         orchestraRepo.save(orchestra);
         eventRepo.save(event);
         return new AddEventUseCase.OutputValues(event);
     }
 
+    @Value
     public static class InputValues implements UseCase.InputValues {
-
-        private final String name;
-        private final String description;
-        private final String type;
-        private final Date date;
-        private final Long eventId;
-        private final Long orchestraId;
-
-        public InputValues(String name, String description, String type, Date date, Long eventId, Long orchestraId) {
-            this.name = name;
-            this.description = description;
-            this.type = type;
-            this.date = date;
-            this.eventId = eventId;
-            this.orchestraId = orchestraId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public Date getDate() {
-            return date;
-        }
-
-        public Long getEventId() {
-            return eventId;
-        }
-
-        public Long getOrchestraId() {
-            return orchestraId;
-        }
+        String name;
+        String description;
+        String type;
+        Date date;
+        Long eventId;
+        Long orchestraId;
     }
 
+    @Value
     public static class OutputValues implements UseCase.OutputValues {
-        private final Event event;
-
-        public OutputValues(Event event) {
-            this.event = event;
-        }
+        Event event;
     }
 
 }

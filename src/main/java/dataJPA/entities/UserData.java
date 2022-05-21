@@ -1,12 +1,23 @@
 package dataJPA.entities;
 
-import core.domain.*;
+import core.domain.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity(name = "user")
 @Table(name = "user")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class UserData {
 
     @Id
@@ -34,112 +45,53 @@ public class UserData {
     private EducationData education;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<RegistrationData> registrationList;
 
     @ManyToOne
     @JoinColumn(name = "orchestra_id")
     private OrchestraData orchestra;
 
-    public UserData(Long id,String name, String email, String address, String password) {
-    this.id=id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.password = password;
-    }
-
-    protected UserData() {
-    }
-
-    public static UserData from(User c) {
-        return new UserData(c.getId(),
-                c.getName(),c.getEmail(),c.getAddress(),c.getPassword()
-        );
+    public static UserData from(User user) {
+        UserData userData = new UserData();
+        userData.setAddress(user.getAddress());
+        userData.setEducation(EducationData.from(user.getEducation()));
+        userData.setEmail(user.getEmail());
+        userData.setId(user.getId());
+        userData.setInstrument(InstrumentData.from(user.getInstrument()));
+        userData.setName(user.getName());
+        userData.setOrchestra(OrchestraData.from(user.getOrchestra()));
+        userData.setPassword(user.getPassword());
+        userData.setStatus(user.getStatus());
+        userData.setRegistrationList(user.getRegistrationList().stream().map(RegistrationData::from).collect(Collectors.toList()));
+        return userData;
     }
 
     public User fromThis() {
-        return new User(this.id,
-               this.name,this.email,this.address,this.password
-        );
+        User user = new User();
+        user.setId(this.getId());
+        user.setName(this.getName());
+        user.setPassword(this.getPassword());
+        user.setEmail(this.getEmail());
+        user.setEducation(this.getEducation().fromThis());
+        user.setAddress(this.getAddress());
+        user.setInstrument(this.getInstrument().fromThis());
+        user.setOrchestra(this.getOrchestra().fromThis());
+        user.setStatus(this.getStatus());
+        user.setRegistrationList(this.getRegistrationList().stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
+        return user;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserData userData = (UserData) o;
+        return id != null && Objects.equals(id, userData.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public InstrumentData getInstrument() {
-        return instrument;
-    }
-
-    public void setInstrument(InstrumentData instrument) {
-        this.instrument = instrument;
-    }
-
-    public EducationData getEducation() {
-        return education;
-    }
-
-    public void setEducation(EducationData education) {
-        this.education = education;
-    }
-
-    public List<RegistrationData> getRegistrationList() {
-        return registrationList;
-    }
-
-    public void setRegistrationList(List<RegistrationData> registrationList) {
-        this.registrationList = registrationList;
-    }
-
-    public OrchestraData getOrchestra() {
-        return orchestra;
-    }
-
-    public void setOrchestra(OrchestraData orchestra) {
-        this.orchestra = orchestra;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

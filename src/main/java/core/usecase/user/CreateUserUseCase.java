@@ -2,6 +2,7 @@ package core.usecase.user;
 
 import core.domain.User;
 import core.usecase.UseCase;
+import lombok.Value;
 
 public class CreateUserUseCase extends UseCase<CreateUserUseCase.InputValues, CreateUserUseCase.OutputValues> {
 
@@ -17,62 +18,28 @@ public class CreateUserUseCase extends UseCase<CreateUserUseCase.InputValues, Cr
             throw new Exception("Email address already in use!");
         }
 
-        User user = new User(
-                input.getUserId(),
-                input.getName(),
-                input.getEmail(),
-                input.getAddress(),
-                input.getPassword()
-        );
-
+        User user = new User();
+        user.setAddress(input.getAddress());
+        user.setEmail(input.getEmail());
+        user.setName(input.getName());
+        user.setPassword(input.getPassword());
+        user.setId(input.getUserId());
         repository.save(user);
 
         return new OutputValues(user);
     }
 
-
+    @Value
     public static class InputValues implements UseCase.InputValues {
-        private final String name;
-        private final String email;
-        private final String address;
-        private final String password;
-        private final Long userId;
-
-        public InputValues(String name, String email, String address, String password, Long userId) {
-            this.name = name;
-            this.email = email;
-            this.address = address;
-            this.password = password;
-            this.userId = userId;
-        }
-
-        public Long getUserId() {
-            return userId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public String getPassword() {
-            return password;
-        }
+        String name;
+        String email;
+        String address;
+        String password;
+        Long userId;
     }
 
-
+    @Value
     public static class OutputValues implements UseCase.OutputValues {
-        private final User user;
-
-        public OutputValues(User user) {
-            this.user = user;
-        }
+        User user;
     }
 }

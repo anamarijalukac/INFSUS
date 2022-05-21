@@ -104,13 +104,13 @@ public class Module {
     }
 
     @Bean
-    public GetAlbumByIdUseCase getAlbumByIdUseCase(DiscographyRepository repository) {
-        return new GetAlbumByIdUseCase(repository);
+    public GetAlbumUseCase getAlbumByIdUseCase(AlbumRepository repository) {
+        return new GetAlbumUseCase(repository);
     }
 
     @Bean
-    public GetDiscographyByIdUseCase getDiscographyByIdUseCase(DiscographyRepository repository) {
-        return new GetDiscographyByIdUseCase(repository);
+    public GetDiscographyUseCase getDiscographyByIdUseCase(DiscographyRepository repository) {
+        return new GetDiscographyUseCase(repository);
     }
 
 

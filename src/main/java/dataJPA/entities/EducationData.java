@@ -1,8 +1,6 @@
 package dataJPA.entities;
 
-import core.domain.Comment;
 import core.domain.Education;
-import core.domain.User;
 
 import javax.persistence.*;
 
@@ -35,9 +33,11 @@ public class EducationData {
     }
 
     public Education fromThis() {
-        return new Education(
-                this.name,this.level,this.id
-        );
+        Education education = new Education();
+        education.setId(this.id);
+        education.setLevel(this.level);
+        education.setName(this.name);
+        return education;
     }
 
     protected EducationData() {

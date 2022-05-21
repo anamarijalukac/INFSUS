@@ -1,14 +1,22 @@
 package dataJPA.entities;
 
 
-import core.domain.Comment;
 import core.domain.Instrument;
-import core.domain.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "instrument")
 @Table(name = "instrument")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class InstrumentData {
 
     @Id
@@ -22,50 +30,31 @@ public class InstrumentData {
     @Column(unique = true, nullable = false)
     private String name;
 
-    public InstrumentData(String name,Long id) {
-        this.name = name;
-        this.id=id;
-    }
+    public static InstrumentData from(Instrument instrument) {
+        InstrumentData instrumentData = new InstrumentData();
+        instrumentData.setId(instrument.getId());
+        instrumentData.setName(instrument.getName());
 
-    public static InstrumentData from(Instrument c) {
-        return new InstrumentData(
-                c.getName(),c.getId()
-        );
+        return instrumentData;
     }
 
     public Instrument fromThis() {
-        return new Instrument(
-                this.name,this.id
-        );
+        Instrument instrument = new Instrument();
+        instrument.setId(this.getId());
+        instrument.setName(this.getName());
+        return instrument;
     }
 
-
-
-
-    protected InstrumentData() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        InstrumentData that = (InstrumentData) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserData getUser() {
-        return user;
-    }
-
-    public void setUser(UserData user) {
-        this.user = user;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

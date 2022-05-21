@@ -1,15 +1,22 @@
 package dataJPA.entities;
 
-import core.domain.Comment;
-import core.domain.Orchestra;
 import core.domain.Registration;
-import core.domain.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "registration")
 @Table(name = "registration")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class RegistrationData {
 
     @Id
@@ -20,38 +27,47 @@ public class RegistrationData {
     private boolean acceptedStatus;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private UserData user;
 
     @Column(nullable = false)
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name="orchestra_id")
+    @JoinColumn(name = "orchestra_id")
     private OrchestraData orchestra;
 
-    public RegistrationData(UserData user, OrchestraData orchestra, Date date,Long id) {
-        this.acceptedStatus = false;
-        this.user = user;
-        this.orchestra = orchestra;
-        this.date = date;
-        this.id=id;
-    }
-
-    protected RegistrationData(){}
-
-    public static RegistrationData from(Registration c) {
-
-
-        return new RegistrationData(
-                UserData.from(c.getUser()),OrchestraData.from(c.getOrchestra()),c.getDate(),c.getId()
-
-        );
+    public static RegistrationData from(Registration registration) {
+        RegistrationData registrationData = new RegistrationData();
+        registrationData.setDate(registration.getDate());
+        registrationData.setAcceptedStatus(registration.isAcceptedStatus());
+        registrationData.setId(registration.getId());
+        registrationData.setDate(registration.getDate());
+        registrationData.setOrchestra(OrchestraData.from(registration.getOrchestra()));
+        registrationData.setUser(UserData.from(registration.getUser()));
+        return registrationData;
     }
 
     public Registration fromThis() {
-        return new Registration(
-                this.user.fromThis(),this.orchestra.fromThis(),this.date,this.id
-        );
+        Registration registration = new Registration();
+        registration.setUser(this.getUser().fromThis());
+        registration.setOrchestra(this.getOrchestra().fromThis());
+        registration.setDate(this.getDate());
+        registration.setAcceptedStatus(this.isAcceptedStatus());
+        registration.setId(this.getId());
+        return registration;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        RegistrationData that = (RegistrationData) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

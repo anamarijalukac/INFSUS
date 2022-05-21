@@ -2,11 +2,21 @@ package dataJPA.entities;
 
 
 import core.domain.Comment;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "comment")
 @Table(name = "comment")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class CommentData {
 
     @Id
@@ -23,59 +33,32 @@ public class CommentData {
     @JoinColumn(name = "event_id")
     private EventData event;
 
-    public CommentData(Long id, String commentText, String commentatorName) {
-        this.id = id;
-        this.commentText = commentText;
-        this.commentatorName = commentatorName;
-    }
-
-    protected CommentData() {
-    }
-
     public static CommentData from(Comment c) {
-        return new CommentData(
-                c.getId(),
-                c.getCommentText(), c.getCommentatorName()
-        );
+        CommentData commentData = new CommentData();
+        commentData.setCommentText(c.getCommentText());
+        commentData.setCommentatorName(c.getCommentatorName());
+        commentData.setId(c.getId());
+        return commentData;
     }
 
     public Comment fromThis() {
-        return new Comment(
-                this.commentText, this.commentatorName, this.id
-        );
+        Comment comment = new Comment();
+        comment.setCommentText(this.getCommentText());
+        comment.setCommentatorName(this.getCommentatorName());
+        comment.setId(this.getId());
+        return comment;
     }
 
-
-
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CommentData that = (CommentData) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCommentText() {
-        return commentText;
-    }
-
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
-
-    public String getCommentatorName() {
-        return commentatorName;
-    }
-
-    public void setCommentatorName(String commentatorName) {
-        this.commentatorName = commentatorName;
-    }
-
-    public EventData getEvent() {
-        return event;
-    }
-
-    public void setEvent(EventData event) {
-        this.event = event;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

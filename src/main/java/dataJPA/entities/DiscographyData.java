@@ -1,68 +1,58 @@
 package dataJPA.entities;
 
 
-import core.domain.Album;
 import core.domain.Discography;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity(name = "discography")
 @Table(name = "discography")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class DiscographyData {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy = "discography")
+    @ToString.Exclude
     private List<AlbumData> albumList;
 
-    public DiscographyData(Long id, List<AlbumData> albumList) {
-        this.id = id;
-        this.albumList = albumList;
-    }
-
-    protected DiscographyData() {
-
-    }
-
     public static DiscographyData from(Discography d) {
-        List<Album> list = d.getAlbumList();
-        List<AlbumData> l = new ArrayList<>();
-        for (Album a : list) {
-            l.add(AlbumData.from(a));
-        }
-        return new DiscographyData(d.getId(),l);
+        DiscographyData discographyData = new DiscographyData();
+        discographyData.setId(d.getId());
+        discographyData.setAlbumList(d.getAlbumList().stream().map(AlbumData::from).collect(Collectors.toList()));
+        return discographyData;
     }
 
     public Discography fromThis() {
-        List<AlbumData> list = this.getAlbumList();
-        List<Album> l = new ArrayList<>();
-        for (AlbumData a : list) {
-            l.add(a.fromThis());
-        }
-
-        return new Discography(this.id,l
-        );
+        Discography discography = new Discography();
+        discography.setId(this.getId());
+        discography.setAlbumList(this.getAlbumList().stream().map(AlbumData::fromThis).collect(Collectors.toList()));
+        return discography;
     }
 
-
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        DiscographyData that = (DiscographyData) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<AlbumData> getAlbumList() {
-        return albumList;
-    }
-
-    public void setAlbumList(List<AlbumData> albumList) {
-        this.albumList = albumList;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
