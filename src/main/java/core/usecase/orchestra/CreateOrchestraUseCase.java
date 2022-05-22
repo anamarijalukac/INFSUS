@@ -6,10 +6,11 @@ import core.domain.User;
 import core.usecase.UseCase;
 import lombok.Value;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.InputValues, CreateOrchestraUseCase.OutputValues> {
 
@@ -42,7 +43,7 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
     }
 
     private List<User> getMembers(List<UserInput> users) {
-        return users.stream().map(this::mapUserInput).collect(Collectors.toList());
+        return emptyIfNull(users).stream().map(this::mapUserInput).collect(Collectors.toList());
     }
 
     private User mapUserInput(UserInput userInput) {

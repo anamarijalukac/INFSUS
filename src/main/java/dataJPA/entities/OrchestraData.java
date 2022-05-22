@@ -1,6 +1,7 @@
 package dataJPA.entities;
 
 import core.domain.Orchestra;
+import core.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
 
 @Entity(name = "orchestra")
 @Table(name = "orchestra")
@@ -37,6 +40,9 @@ public class OrchestraData {
     @ToString.Exclude
     private List<UserData> members;
 
+    @Column
+    private Long leader_id;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "discography_id", referencedColumnName = "id")
@@ -56,12 +62,13 @@ public class OrchestraData {
         OrchestraData orchestraData = new OrchestraData();
         orchestraData.setDiscography(DiscographyData.from(orchestra.getDiscography()));
         orchestraData.setId(orchestra.getId());
-        orchestraData.setEvents(orchestra.getEvents().stream().map(EventData::from).collect(Collectors.toList()));
+        orchestraData.setEvents(emptyIfNull(orchestra.getEvents()).stream().map(EventData::from).collect(Collectors.toList()));
         orchestraData.setName(orchestra.getName());
         orchestraData.setFounded_date(orchestra.getFounded_date());
-        orchestraData.setMembers(orchestra.getMembers().stream().map(UserData::from).collect(Collectors.toList()));
-        orchestraData.setRegistrations(orchestra.getRegistrations().stream().map(RegistrationData::from).collect(Collectors.toList()));
+        orchestraData.setMembers(emptyIfNull(orchestra.getMembers()).stream().map(UserData::from).collect(Collectors.toList()));
+        orchestraData.setRegistrations(emptyIfNull(orchestra.getRegistrations()).stream().map(RegistrationData::from).collect(Collectors.toList()));
         orchestraData.setWeb_page(orchestra.getWeb_page());
+        orchestraData.setLeader_id(orchestra.getLeader() != null ? orchestra.getLeader().getId() : null);
         return orchestraData;
     }
 
@@ -69,12 +76,17 @@ public class OrchestraData {
         Orchestra orchestra = new Orchestra();
         orchestra.setId(this.getId());
         orchestra.setDiscography(this.getDiscography().fromThis());
-        orchestra.setEvents(this.getEvents().stream().map(EventData::fromThis).collect(Collectors.toList()));
+        orchestra.setEvents(emptyIfNull(this.getEvents()).stream().map(EventData::fromThis).collect(Collectors.toList()));
         orchestra.setFounded_date(this.getFounded_date());
-        orchestra.setMembers(this.getMembers().stream().map(UserData::fromThis).collect(Collectors.toList()));
-        orchestra.setRegistrations(this.getRegistrations().stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
+        orchestra.setMembers(emptyIfNull(this.getMembers()).stream().map(UserData::fromThis).collect(Collectors.toList()));
+        orchestra.setRegistrations(emptyIfNull(this.getRegistrations()).stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
         orchestra.setName(this.getName());
         orchestra.setWeb_page(this.getWeb_page());
+        if (orchestra.getLeader() != null) {
+            User user = new User();
+            user.setId(orchestra.getLeader().getId());
+            orchestra.setLeader(user);
+        }
         return orchestra;
     }
 

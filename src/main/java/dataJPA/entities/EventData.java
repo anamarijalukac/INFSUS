@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Entity(name = "event")
 @Table(name = "event")
 @Getter
@@ -46,7 +48,7 @@ public class EventData {
     public static EventData from(Event event) {
         EventData eventData = new EventData();
         eventData.setDate(event.getDate());
-        eventData.setComments(event.getComments().stream().map(CommentData::from).collect(Collectors.toList()));
+        eventData.setComments(emptyIfNull(event.getComments()).stream().map(CommentData::from).collect(Collectors.toList()));
         eventData.setDescription(event.getDescription());
         eventData.setId(event.getId());
         eventData.setName(event.getName());
@@ -60,7 +62,7 @@ public class EventData {
         event.setDate(this.getDate());
         event.setName(this.getName());
         event.setDescription(this.getDescription());
-        event.setComments(this.getComments().stream().map(CommentData::fromThis).collect(Collectors.toList()));
+        event.setComments(emptyIfNull(this.getComments()).stream().map(CommentData::fromThis).collect(Collectors.toList()));
         event.setId(this.getId());
         return event;
     }

@@ -2,7 +2,6 @@ package core.domain;
 
 import lombok.Data;
 
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class Album {
     private Long id;
     private List<Song> songs = new ArrayList<>();
     private String genre;
-    private Year year;
+    private String year;
     private String name;
     private Discography discography;
 

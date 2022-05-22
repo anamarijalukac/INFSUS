@@ -6,6 +6,8 @@ import lombok.Value;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Value
 public class UserResponse {
     Long id;
@@ -28,9 +30,10 @@ public class UserResponse {
                 user.getPassword(),
                 InstrumentResponse.from(user.getInstrument()),
                 EducationResponse.from(user.getEducation()),
-                user.getRegistrationList().stream().map(RegistrationResponse::from).collect(Collectors.toList()),
+                emptyIfNull(user.getRegistrationList()).stream().map(RegistrationResponse::from).collect(Collectors.toList()),
                 user.getStatus(),
-                OrchestraResponse.from(user.getOrchestra())
+                null
+//                OrchestraResponse.from(user.getOrchestra())
         );
     }
 }

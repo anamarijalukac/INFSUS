@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Entity(name = "discography")
 @Table(name = "discography")
 @Getter
@@ -32,14 +34,14 @@ public class DiscographyData {
     public static DiscographyData from(Discography d) {
         DiscographyData discographyData = new DiscographyData();
         discographyData.setId(d.getId());
-        discographyData.setAlbumList(d.getAlbumList().stream().map(AlbumData::from).collect(Collectors.toList()));
+        discographyData.setAlbumList(emptyIfNull(d.getAlbumList()).stream().map(AlbumData::from).collect(Collectors.toList()));
         return discographyData;
     }
 
     public Discography fromThis() {
         Discography discography = new Discography();
         discography.setId(this.getId());
-        discography.setAlbumList(this.getAlbumList().stream().map(AlbumData::fromThis).collect(Collectors.toList()));
+        discography.setAlbumList(emptyIfNull(this.getAlbumList()).stream().map(AlbumData::fromThis).collect(Collectors.toList()));
         return discography;
     }
 

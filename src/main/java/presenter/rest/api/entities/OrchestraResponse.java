@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Value
 public class OrchestraResponse {
     Long id;
@@ -26,11 +28,12 @@ public class OrchestraResponse {
                 orchestra.getName(),
                 orchestra.getFounded_date(),
                 orchestra.getWeb_page(),
-                orchestra.getMembers().stream().map(UserResponse::from).collect(Collectors.toList()),
+                emptyIfNull(orchestra.getMembers()).stream().map(UserResponse::from).collect(Collectors.toList()),
                 DiscographyResponse.from(orchestra.getDiscography()),
-                orchestra.getEvents().stream().map(EventResponse::from).collect(Collectors.toList()),
-                orchestra.getRegistrations().stream().map(RegistrationResponse::from).collect(Collectors.toList()),
-                UserResponse.from(orchestra.getLeader())
+                emptyIfNull(orchestra.getEvents()).stream().map(EventResponse::from).collect(Collectors.toList()),
+                emptyIfNull(orchestra.getRegistrations()).stream().map(RegistrationResponse::from).collect(Collectors.toList()),
+                null
+//                UserResponse.from(orchestra.getLeader())
         );
     }
 }

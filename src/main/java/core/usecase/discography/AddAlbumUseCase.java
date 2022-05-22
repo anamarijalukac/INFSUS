@@ -5,7 +5,6 @@ import core.domain.Discography;
 import core.usecase.UseCase;
 import lombok.Value;
 
-import java.time.Year;
 
 public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlbumUseCase.OutputValues> {
 
@@ -37,14 +36,14 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
 
     public static class InputValues implements UseCase.InputValues {
         private final String genre;
-        private final Year year;
+        private final String year;
         private final String name;
         private final Long albumId;
 
         private final Long discographyId;
 
 
-        public InputValues(String genre, Year year, String name, Long albumId, Long discographyId) {
+        public InputValues(String genre, String year, String name, Long albumId, Long discographyId) {
             this.genre = genre;
             this.year = year;
             this.name = name;
@@ -65,7 +64,7 @@ public class AddAlbumUseCase extends UseCase<AddAlbumUseCase.InputValues, AddAlb
             return genre;
         }
 
-        public Year getYear() {
+        public String getYear() {
             return year;
         }
 

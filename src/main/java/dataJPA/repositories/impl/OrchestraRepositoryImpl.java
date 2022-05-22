@@ -6,6 +6,8 @@ import dataJPA.entities.OrchestraData;
 import dataJPA.repositories.interfaces.JpaOrchestraRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -21,7 +23,12 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
 
 
     @Override
+    @Transactional
     public List<Orchestra> getAll() {
+        Iterable<OrchestraData> orchestraData = repository.findAll();
+        if (orchestraData.spliterator() == null) {
+            return Collections.emptyList();
+        }
         return StreamSupport
                 .stream(repository.findAll().spliterator(), false)
                 .map(OrchestraData::fromThis)
@@ -34,6 +41,7 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
     }
 
     @Override
+    @Transactional
     public Orchestra getById(Long id) {
         return repository.findById(id).get().fromThis();
     }

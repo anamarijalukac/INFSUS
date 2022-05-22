@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Entity(name = "user")
 @Table(name = "user")
 @Getter
@@ -63,7 +65,7 @@ public class UserData {
         userData.setOrchestra(OrchestraData.from(user.getOrchestra()));
         userData.setPassword(user.getPassword());
         userData.setStatus(user.getStatus());
-        userData.setRegistrationList(user.getRegistrationList().stream().map(RegistrationData::from).collect(Collectors.toList()));
+        userData.setRegistrationList(emptyIfNull(user.getRegistrationList()).stream().map(RegistrationData::from).collect(Collectors.toList()));
         return userData;
     }
 
@@ -76,9 +78,9 @@ public class UserData {
         user.setEducation(this.getEducation().fromThis());
         user.setAddress(this.getAddress());
         user.setInstrument(this.getInstrument().fromThis());
-        user.setOrchestra(this.getOrchestra().fromThis());
+//        user.setOrchestra(this.getOrchestra().fromThis());
         user.setStatus(this.getStatus());
-        user.setRegistrationList(this.getRegistrationList().stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
+        user.setRegistrationList(emptyIfNull(this.getRegistrationList()).stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
         return user;
     }
 

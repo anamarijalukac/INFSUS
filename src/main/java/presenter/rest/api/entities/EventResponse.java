@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Value
 public class EventResponse {
     Long id;
@@ -23,7 +25,7 @@ public class EventResponse {
                 event.getDescription(),
                 event.getType(),
                 event.getDate(),
-                event.getComments().stream().map(CommentResponse::from).collect(Collectors.toList())
+                emptyIfNull(event.getComments()).stream().map(CommentResponse::from).collect(Collectors.toList())
         );
     }
 }

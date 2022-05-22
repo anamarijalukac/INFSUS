@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.collections4.CollectionUtils.emptyIfNull;
+
 @Component
 public class OrchestraController implements OrchestraResource {
     private UseCaseExecutor useCaseExecutor;
@@ -41,7 +43,7 @@ public class OrchestraController implements OrchestraResource {
         return useCaseExecutor.execute(
                 getOrchestrasUseCase,
                 new GetOrchestrasUseCase.InputValues(),
-                (outputValues) -> outputValues.getOrchestras().stream().map(OrchestraResponse::from).collect(Collectors.toList())
+                (outputValues) -> emptyIfNull(outputValues.getOrchestras()).stream().map(OrchestraResponse::from).collect(Collectors.toList())
         );
     }
 
