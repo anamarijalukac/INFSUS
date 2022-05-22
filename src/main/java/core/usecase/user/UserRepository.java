@@ -2,8 +2,11 @@ package core.usecase.user;
 
 import core.domain.User;
 
+import java.util.List;
+
 public interface UserRepository {
 
+    List<User> getAll();
 
     boolean existsById(Long id);
 

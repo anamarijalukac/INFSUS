@@ -356,3 +356,30 @@ insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INST
 values (39, '3 Eastlawn Junction', 'hdeclairmont12@icio.us', 'dreavey12', 'BStof5xNlIb2', 'USER', 3, 6, 5);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
 values (40, '03057 School Avenue', 'emaben13@youtu.be', 'pleaburn13', 'UPw0TxoF7', 'USER', 2, 7, 3);
+
+-- EVENT table
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (1, '2027-02-07 10:36:33', 'In blandit ultrices enim.', 'sapien ut nunc', 'Concert', 1);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (2, '2028-12-26 07:23:45', 'Suspendisse potenti.', 'id', 'Concert', 3);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (3, '2025-12-15 20:24:31', 'Morbi non quam nec dui luctus rutrum. Nulla tellus.', 'blandit non interdum in', 'Rehearsal', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (4, '2025-01-21 09:17:18', 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti.', 'adipiscing elit proin', 'Meeting', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (5, '2022-01-02 08:05:50', 'Sed ante. Vivamus tortor.', 'sapien', 'Team Building', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (6, '2022-03-12 19:30:00', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.', 'mi', 'Rehearsal', 3);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (7, '2025-12-14 16:26:45', 'Integer tincidunt ante vel ipsum.', 'enim blandit mi', 'Meeting', 4);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (8, '2021-06-29 03:25:33', 'Vestibulum rutrum rutrum neque.', 'id sapien in sapien', 'Meeting', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (9, '2027-05-11 04:34:28', 'Aenean fermentum. Donec ut mauris eget massa tempor convallis.', 'consectetuer', 'Team Building', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (10, '2027-06-10 18:33:22', 'Sed ante. Vivamus tortor.', 'a libero nam dui', 'Team Building', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (11, '2025-11-05 20:45:45', 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.', 'mattis pulvinar nulla pede', 'Team Building', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (12, '2027-01-15 10:53:55', 'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum.', 'vestibulum ac', 'Team Building', 1);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (13, '2022-09-10 11:41:48', 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.', 'rhoncus', 'Team Building', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (14, '2030-01-22 03:35:55', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', 'tristique tortor eu pede', 'Meeting', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (15, '2027-05-18 05:59:38', 'Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 'sed sagittis nam congue', 'Rehearsal', 4);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (16, '2023-02-26 21:47:26', 'Nulla nisl.', 'sapien a', 'Meeting', 4);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (17, '2024-05-12 04:07:22', 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.', 'curabitur', 'Team Building', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (18, '2027-11-26 13:28:31', 'Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo.', 'eget massa', 'Concert', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (19, '2028-10-03 13:40:07', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'nisi volutpat', 'Team Building', 5);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (20, '2025-06-08 14:24:06', 'Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 'est risus auctor', 'Meeting', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (21, '2025-08-03 15:09:41', 'Vestibulum rutrum rutrum neque.', 'adipiscing', 'Rehearsal', 1);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (22, '2027-06-18 03:26:03', 'Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum.', 'nunc', 'Rehearsal', 2);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (23, '2030-02-17 13:44:17', 'In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 'lectus vestibulum quam', 'Concert', 3);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (24, '2030-05-02 20:06:46', 'Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus.', 'quam pharetra magna', 'Meeting', 3);
+insert into EVENT (ID, DATE, DESCRIPTION, NAME, TYPE, ORCHESTRA_ID) values (25, '2027-12-17 08:36:03', 'Phasellus in felis. Donec semper sapien a libero.', 'ut', 'Meeting', 1);

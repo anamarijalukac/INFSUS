@@ -3,9 +3,15 @@ package dataJPA.repositories.impl;
 
 import core.domain.User;
 import core.usecase.user.UserRepository;
+import dataJPA.entities.OrchestraData;
 import dataJPA.entities.UserData;
 import dataJPA.repositories.interfaces.JpaUserRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -17,7 +23,17 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-
+    @Override
+    public List<User> getAll() {
+        Iterable<UserData> userData = repository.findAll();
+        if (userData.spliterator() == null) {
+            return Collections.emptyList();
+        }
+        return StreamSupport
+                .stream(repository.findAll().spliterator(), false)
+                .map(UserData::fromThis)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public boolean existsById(Long id) {

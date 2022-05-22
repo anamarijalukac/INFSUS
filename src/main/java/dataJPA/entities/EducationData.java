@@ -3,6 +3,7 @@ package dataJPA.entities;
 import core.domain.Education;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "education")
 @Table(name = "education")
@@ -17,8 +18,8 @@ public class EducationData {
     @Column(nullable = false)
     private String level;
 
-    @OneToOne(mappedBy = "education")
-    private UserData user;
+    @OneToMany(mappedBy = "education")
+    private List<UserData> user;
 
     public EducationData(String name, String level,Long id) {
         this.name = name;

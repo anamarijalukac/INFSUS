@@ -38,11 +38,11 @@ public class UserData {
     private String status;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "instrument_id", referencedColumnName = "id")
     private InstrumentData instrument;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "education_id", referencedColumnName = "id")
     private EducationData education;
 
@@ -80,7 +80,7 @@ public class UserData {
         user.setInstrument(this.getInstrument().fromThis());
 //        user.setOrchestra(this.getOrchestra().fromThis());
         user.setStatus(this.getStatus());
-        user.setRegistrationList(emptyIfNull(this.getRegistrationList()).stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
+//        user.setRegistrationList(emptyIfNull(this.getRegistrationList()).stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
         return user;
     }
 

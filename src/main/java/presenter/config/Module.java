@@ -8,10 +8,7 @@ import core.usecase.registration.AcceptRegistrationUseCase;
 import core.usecase.registration.CreateRegistrationUseCase;
 import core.usecase.registration.GetRegistrationUseCase;
 import core.usecase.registration.RegistrationRepository;
-import core.usecase.user.CreateUserUseCase;
-import core.usecase.user.GetUserUseCase;
-import core.usecase.user.UpdateUserUseCase;
-import core.usecase.user.UserRepository;
+import core.usecase.user.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,6 +28,11 @@ public class Module {
     @Bean
     public GetUserUseCase getUserUseCase(UserRepository repository) {
         return new GetUserUseCase(repository);
+    }
+
+    @Bean
+    public GetUsersUseCase getUsersUseCase(UserRepository repository) {
+        return new GetUsersUseCase(repository);
     }
 
 

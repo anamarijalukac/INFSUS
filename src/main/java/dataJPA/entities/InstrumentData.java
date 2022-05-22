@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "instrument")
@@ -23,8 +24,8 @@ public class InstrumentData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "instrument")
-    private UserData user;
+    @OneToMany(mappedBy = "instrument")
+    private List<UserData> user;
 
 
     @Column(unique = true, nullable = false)
