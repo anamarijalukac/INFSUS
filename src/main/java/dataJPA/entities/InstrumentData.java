@@ -25,6 +25,7 @@ public class InstrumentData {
     private Long id;
 
     @OneToMany(mappedBy = "instrument")
+    @ToString.Exclude
     private List<UserData> user;
 
 

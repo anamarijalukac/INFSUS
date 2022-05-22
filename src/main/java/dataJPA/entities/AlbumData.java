@@ -40,6 +40,7 @@ public class AlbumData {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "discography_id")
+    @ToString.Exclude
     private DiscographyData discography;
 
     public static AlbumData from(Album a) {
@@ -49,7 +50,9 @@ public class AlbumData {
         albumData.setId(a.getId());
         albumData.setSongs(emptyIfNull(a.getSongs()).stream().map(SongData::from).collect(Collectors.toList()));
         albumData.setYear(a.getYear());
-        albumData.setDiscography(DiscographyData.from(a.getDiscography()));
+        if (a.getDiscography() != null) {
+            albumData.setDiscography(DiscographyData.from(a.getDiscography()));
+        }
         return albumData;
     }
 

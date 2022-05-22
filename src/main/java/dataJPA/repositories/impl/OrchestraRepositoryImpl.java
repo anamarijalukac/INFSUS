@@ -47,6 +47,7 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
     }
 
     @Override
+    @Transactional
     public Orchestra save(Orchestra orchestra) {
         final OrchestraData orchestraData = OrchestraData.from(orchestra);
         return repository.save(orchestraData).fromThis();

@@ -71,4 +71,12 @@ public class OrchestraController implements OrchestraResource {
                 CreateOrchestraInputMapper.map(orchestraRequest),
                 (outputValues) -> CreateOrchestraOutputMapper.map(outputValues.getOrchestra(), httpServletRequest));
     }
+
+    @Override
+    public CompletableFuture<ResponseEntity<ApiResponse>> update(HttpServletRequest httpServletRequest, OrchestraRequest orchestraRequest, Long id) {
+        return useCaseExecutor.execute(
+                updateOrchestraUseCase,
+                UpdateOrchestraInputMapper.map(orchestraRequest, id),
+                (outputValues) -> UpdateOrchestraOutputMapper.map(outputValues.getOrchestra(), httpServletRequest));
+    }
 }

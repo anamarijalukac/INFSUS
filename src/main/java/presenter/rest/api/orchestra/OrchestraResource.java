@@ -26,4 +26,9 @@ public interface OrchestraResource {
     @PostMapping
     CompletableFuture<ResponseEntity<ApiResponse>> create(HttpServletRequest httpServletRequest,
                                                           @Valid @RequestBody OrchestraRequest orchestraRequest);
+
+    @PostMapping("/{id}")
+    CompletableFuture<ResponseEntity<ApiResponse>> update(HttpServletRequest httpServletRequest,
+                                                          @Valid @RequestBody OrchestraRequest orchestraRequest,
+                                                          @PathVariable Long id);
 }
