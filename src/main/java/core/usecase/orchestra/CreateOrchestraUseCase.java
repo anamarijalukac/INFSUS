@@ -1,6 +1,7 @@
 package core.usecase.orchestra;
 
 import core.domain.AlreadyExistsException;
+import core.domain.Discography;
 import core.domain.Orchestra;
 import core.domain.User;
 import core.usecase.UseCase;
@@ -22,20 +23,20 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
 
     @Override
     public OutputValues execute(InputValues input) {
-        if (repository.existsById(input.getOrchestraId())) {
-            throw new AlreadyExistsException("Orchestra name already in use!");
-        }
-
         Orchestra orchestra = new Orchestra();
         orchestra.setName(input.getName());
         orchestra.setFounded_date(input.getFounded_date());
         orchestra.setId(input.getOrchestraId());
         orchestra.setMembers(getMembers(input.getMembers()));
+        orchestra.setWeb_page(input.getWeb_page());
 
-        User leader = mapUserInput(input.getLeader());
-        leader.setStatus("LEADER");
-        orchestra.setLeader(leader);
-
+        Discography discography = new Discography();
+        orchestra.setDiscography(discography);
+        if (input.getLeader() != null) {
+            User leader = mapUserInput(input.getLeader());
+            leader.setStatus("LEADER");
+            orchestra.setLeader(leader);
+        }
         repository.save(orchestra);
 
 
@@ -58,6 +59,7 @@ public class CreateOrchestraUseCase extends UseCase<CreateOrchestraUseCase.Input
     public static class InputValues implements UseCase.InputValues {
         String name;
         Date founded_date;
+        String web_page;
         List<UserInput> members;
         UserInput leader;
         Long orchestraId;

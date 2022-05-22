@@ -14,8 +14,9 @@ public final class CreateOrchestraInputMapper {
         return new CreateOrchestraUseCase.InputValues(
                 orchestraRequest.getName(),
                 orchestraRequest.getFounded_date(),
+                orchestraRequest.getWeb_page(),
                 emptyIfNull(orchestraRequest.getMembers()).stream().map(CreateOrchestraInputMapper::mapUserRequest).collect(Collectors.toList()),
-                mapUserRequest(orchestraRequest.getLeader()),
+                orchestraRequest.getLeader() != null ? mapUserRequest(orchestraRequest.getLeader()) : null,
                 orchestraRequest.getId());
     }
 
