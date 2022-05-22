@@ -37,11 +37,11 @@ public class EventData {
     private Date date;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "orchestra_id")
     private OrchestraData orchestra;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<CommentData> comments;
 

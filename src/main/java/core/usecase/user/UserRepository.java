@@ -8,6 +8,8 @@ public interface UserRepository {
 
     List<User> getAll();
 
+    List<User> findByOrchestraId(Long orchestraId);
+
     boolean existsById(Long id);
 
     User findById(Long id);

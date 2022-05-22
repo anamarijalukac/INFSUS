@@ -1,6 +1,7 @@
 package presenter.config;
 
 
+import core.domain.User;
 import core.usecase.discography.*;
 import core.usecase.event.*;
 import core.usecase.orchestra.*;
@@ -35,6 +36,10 @@ public class Module {
         return new GetUsersUseCase(repository);
     }
 
+    @Bean
+    public DeleteOrchestraUseCase deleteOrchestraUseCase(OrchestraRepository orchestraRepository, UserRepository userRepository) {
+        return new DeleteOrchestraUseCase(orchestraRepository, userRepository);
+    }
 
     @Bean
     public AcceptRegistrationUseCase acceptRegistrationUseCase(RegistrationRepository registrationRepo, UserRepository userRepo, OrchestraRepository orchestraRepo) {

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -49,7 +51,7 @@ public class OrchestraData {
     private DiscographyData discography;
 
 
-    @OneToMany(mappedBy = "orchestra")
+    @OneToMany(mappedBy = "orchestra", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<EventData> events;
 

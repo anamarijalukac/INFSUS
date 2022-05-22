@@ -20,6 +20,9 @@ public interface OrchestraResource {
     @GetMapping("/{id}")
     CompletableFuture<OrchestraResponse> getByIdentity(@PathVariable Long id);
 
+    @DeleteMapping("/{id}")
+    CompletableFuture<ApiResponse> delete(@PathVariable Long id);
+
     @PostMapping
     CompletableFuture<ResponseEntity<ApiResponse>> create(HttpServletRequest httpServletRequest,
                                                           @Valid @RequestBody OrchestraRequest orchestraRequest);

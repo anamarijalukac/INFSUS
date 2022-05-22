@@ -29,7 +29,7 @@ public class CommentData {
     private String commentatorName;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "event_id")
     private EventData event;
 

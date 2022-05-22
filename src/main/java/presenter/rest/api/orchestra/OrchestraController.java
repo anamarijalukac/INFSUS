@@ -1,10 +1,7 @@
 package presenter.rest.api.orchestra;
 
 import core.usecase.UseCaseExecutor;
-import core.usecase.orchestra.CreateOrchestraUseCase;
-import core.usecase.orchestra.GetOrchestraUseCase;
-import core.usecase.orchestra.GetOrchestrasUseCase;
-import core.usecase.orchestra.UpdateOrchestraUseCase;
+import core.usecase.orchestra.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import presenter.rest.api.entities.ApiResponse;
@@ -25,17 +22,20 @@ public class OrchestraController implements OrchestraResource {
     private GetOrchestraUseCase getOrchestraUseCase;
     private UpdateOrchestraUseCase updateOrchestraUseCase;
     private GetOrchestrasUseCase getOrchestrasUseCase;
+    private DeleteOrchestraUseCase deleteOrchestraUseCase;
 
     public OrchestraController(UseCaseExecutor useCaseExecutor,
                                CreateOrchestraUseCase createOrchestraUseCase,
                                GetOrchestraUseCase getOrchestraUseCase,
                                UpdateOrchestraUseCase updateOrchestraUseCase,
-                               GetOrchestrasUseCase getOrchestrasUseCase) {
+                               GetOrchestrasUseCase getOrchestrasUseCase,
+                               DeleteOrchestraUseCase deleteOrchestraUseCase) {
         this.useCaseExecutor = useCaseExecutor;
         this.createOrchestraUseCase = createOrchestraUseCase;
         this.getOrchestraUseCase = getOrchestraUseCase;
         this.updateOrchestraUseCase = updateOrchestraUseCase;
         this.getOrchestrasUseCase = getOrchestrasUseCase;
+        this.deleteOrchestraUseCase = deleteOrchestraUseCase;
     }
 
     @Override
@@ -55,6 +55,14 @@ public class OrchestraController implements OrchestraResource {
                 (outputValues) -> OrchestraResponse.from(outputValues.getOrchestra())
         );
     }
+
+    @Override
+    public CompletableFuture<ApiResponse> delete(Long id) {
+        return useCaseExecutor.execute(
+                deleteOrchestraUseCase,
+                new DeleteOrchestraUseCase.InputValues(id),
+                (outputValues) -> new ApiResponse(true, "Orchestra successfully deleted")
+        );    }
 
     @Override
     public CompletableFuture<ResponseEntity<ApiResponse>> create(HttpServletRequest httpServletRequest, OrchestraRequest orchestraRequest) {

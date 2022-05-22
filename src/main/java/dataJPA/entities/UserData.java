@@ -62,7 +62,9 @@ public class UserData {
         userData.setId(user.getId());
         userData.setInstrument(InstrumentData.from(user.getInstrument()));
         userData.setName(user.getName());
-        userData.setOrchestra(OrchestraData.from(user.getOrchestra()));
+        if (user.getOrchestra() != null) {
+            userData.setOrchestra(OrchestraData.from(user.getOrchestra()));
+        }
         userData.setPassword(user.getPassword());
         userData.setStatus(user.getStatus());
         userData.setRegistrationList(emptyIfNull(user.getRegistrationList()).stream().map(RegistrationData::from).collect(Collectors.toList()));

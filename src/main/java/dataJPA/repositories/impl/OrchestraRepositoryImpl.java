@@ -51,4 +51,9 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
         final OrchestraData orchestraData = OrchestraData.from(orchestra);
         return repository.save(orchestraData).fromThis();
     }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }

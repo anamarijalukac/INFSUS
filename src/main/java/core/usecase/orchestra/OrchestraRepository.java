@@ -16,10 +16,6 @@ public interface OrchestraRepository {
 
     Orchestra save(Orchestra orchestra);
 
-
-
-
-
-
+    void delete(Long id);
 
 }

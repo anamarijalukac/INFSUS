@@ -27,7 +27,7 @@ public class AlbumData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<SongData> songs;
 

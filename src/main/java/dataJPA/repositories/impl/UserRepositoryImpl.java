@@ -6,6 +6,7 @@ import core.usecase.user.UserRepository;
 import dataJPA.entities.OrchestraData;
 import dataJPA.entities.UserData;
 import dataJPA.repositories.interfaces.JpaUserRepository;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -33,6 +34,11 @@ public class UserRepositoryImpl implements UserRepository {
                 .stream(repository.findAll().spliterator(), false)
                 .map(UserData::fromThis)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findByOrchestraId(Long id) {
+        return CollectionUtils.emptyIfNull(repository.findByOrchestra_Id(id)).stream().map(UserData::fromThis).collect(Collectors.toList());
     }
 
     @Override
