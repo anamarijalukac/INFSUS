@@ -277,7 +277,7 @@ where ID = 5;
 
 -- USER table
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
-values (1, '10970 3rd Road', 'kkenwyn0@usda.gov', 'fpacker0', 'anekk5WAo', 'USER', 3, 2, 5);
+values (1, '10970 3rd Road', 'user@gmail.com', 'user12345', '12345', 'USER', 3, 2, 5);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
 values (2, '651 Porter Avenue', 'vgethings1@ted.com', 'rlibermore1', 'SPUO3t', 'USER', 1, 6, 4);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
