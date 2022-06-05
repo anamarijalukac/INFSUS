@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Named
-public class SendInformation implements JavaDelegate, TaskListener {
+public class SendInformation implements JavaDelegate {
 
     private final UserRepository userRepository;
     private final OrchestraRepository orchestraRepository;
@@ -49,36 +49,12 @@ public class SendInformation implements JavaDelegate, TaskListener {
         orchestraRepository.save(orchestra);
     }
 
-    @Override
-    public void notify(DelegateTask delegateTask) {
-        Long userId = (Long) delegateTask.getVariable("userId");
-        Long orchestraId = (Long) delegateTask.getVariable("orchestraId");
-        System.out.println("Started process for user(" + userId + ") and orchestra(" + orchestraId + ")");
-        String alreadyIn = "YES";
-        if (!isAlreadyIn(userId)) {
-            alreadyIn = "NO";
-        }
-        System.out.println("User is already in? " + alreadyIn);
-        delegateTask.setVariable("alreadyIn", alreadyIn);
-    }
-
     private Registration createRegistration(User user, Orchestra orchestra) {
         Registration registration = new Registration();
         registration.setOrchestra(orchestra);
         registration.setUser(user);
         registration.setDate(new Date());
         return registration;
-    }
-
-    private boolean isAlreadyIn(Long userId) {
-        List<Orchestra> orchestras = orchestraRepository.getAll();
-        for (Orchestra orchestra : orchestras) {
-            Optional<User> exists = orchestra.getMembers().stream().filter(user -> Objects.equals(user.getId(), userId)).findFirst();
-            if (exists.isPresent()) {
-                return true;
-            }
-        }
-        return false;
     }
 }
 

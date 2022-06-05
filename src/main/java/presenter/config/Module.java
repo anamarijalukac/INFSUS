@@ -2,6 +2,7 @@ package presenter.config;
 
 
 import camunda.SendInformation;
+import camunda.SignUpRequest;
 import core.service.EmailService;
 import core.service.EmailServiceImpl;
 import core.usecase.discography.*;
@@ -32,6 +33,11 @@ public class Module {
     @Bean
     public SendInformation sendInformation(UserRepository userRepository, OrchestraRepository orchestraRepository, EmailService emailService) {
         return new SendInformation(userRepository, orchestraRepository, emailService);
+    }
+
+    @Bean
+    public SignUpRequest signUpRequest(OrchestraRepository orchestraRepository) {
+        return new SignUpRequest(orchestraRepository);
     }
 
     @Bean
