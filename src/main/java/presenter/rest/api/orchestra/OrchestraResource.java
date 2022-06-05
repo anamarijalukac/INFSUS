@@ -20,6 +20,9 @@ public interface OrchestraResource {
     @GetMapping("/{id}")
     CompletableFuture<OrchestraResponse> getByIdentity(@PathVariable Long id);
 
+    @PostMapping("/{orchestraId}/sign-up/{userId}")
+    CompletableFuture<ApiResponse> signUpUserForOrchestra(@PathVariable Long orchestraId, @PathVariable Long userId);
+
     @DeleteMapping("/{id}")
     CompletableFuture<ApiResponse> delete(@PathVariable Long id);
 

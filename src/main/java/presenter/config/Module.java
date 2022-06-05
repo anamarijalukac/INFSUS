@@ -1,7 +1,9 @@
 package presenter.config;
 
 
-import core.domain.User;
+import camunda.SendInformation;
+import core.service.EmailService;
+import core.service.EmailServiceImpl;
 import core.usecase.discography.*;
 import core.usecase.event.*;
 import core.usecase.orchestra.*;
@@ -12,6 +14,7 @@ import core.usecase.registration.RegistrationRepository;
 import core.usecase.user.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
 
 @Configuration
 public class Module {
@@ -19,6 +22,16 @@ public class Module {
     @Bean
     public CreateUserUseCase createUserUseCase(UserRepository repository) {
         return new CreateUserUseCase(repository);
+    }
+
+    @Bean
+    public EmailService emailService(JavaMailSender javaMailSender) {
+        return new EmailServiceImpl(javaMailSender);
+    }
+
+    @Bean
+    public SendInformation sendInformation(UserRepository userRepository, OrchestraRepository orchestraRepository, EmailService emailService) {
+        return new SendInformation(userRepository, orchestraRepository, emailService);
     }
 
     @Bean

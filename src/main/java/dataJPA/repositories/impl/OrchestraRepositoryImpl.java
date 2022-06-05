@@ -1,7 +1,9 @@
 package dataJPA.repositories.impl;
 
 import core.domain.Orchestra;
+import core.domain.User;
 import core.usecase.orchestra.OrchestraRepository;
+import core.usecase.user.UserRepository;
 import dataJPA.entities.OrchestraData;
 import dataJPA.repositories.interfaces.JpaOrchestraRepository;
 import org.springframework.stereotype.Repository;
@@ -16,9 +18,11 @@ import java.util.stream.StreamSupport;
 public class OrchestraRepositoryImpl implements OrchestraRepository {
 
     private final JpaOrchestraRepository repository;
+    private final UserRepository userRepository;
 
-    public OrchestraRepositoryImpl(JpaOrchestraRepository repository) {
+    public OrchestraRepositoryImpl(JpaOrchestraRepository repository, UserRepository userRepository) {
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
 
@@ -29,10 +33,19 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
         if (orchestraData.spliterator() == null) {
             return Collections.emptyList();
         }
-        return StreamSupport
+        List<Orchestra> orchestras = StreamSupport
                 .stream(repository.findAll().spliterator(), false)
                 .map(OrchestraData::fromThis)
                 .collect(Collectors.toList());
+        for (Orchestra orchestra : orchestras) {
+            User leader = orchestra.getLeader();
+            if (leader != null) {
+                if (leader.getId() != null) {
+                    orchestra.setLeader(userRepository.findById(leader.getId()));
+                }
+            }
+        }
+        return orchestras;
     }
 
     @Override
@@ -43,7 +56,14 @@ public class OrchestraRepositoryImpl implements OrchestraRepository {
     @Override
     @Transactional
     public Orchestra getById(Long id) {
-        return repository.findById(id).get().fromThis();
+        Orchestra orchestra = repository.findById(id).get().fromThis();
+        User leader = orchestra.getLeader();
+        if (leader != null) {
+            if (leader.getId() != null) {
+                orchestra.setLeader(userRepository.findById(leader.getId()));
+            }
+        }
+        return orchestra;
     }
 
     @Override

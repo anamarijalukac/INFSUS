@@ -1,8 +1,6 @@
 package core.usecase.orchestra;
 
-import core.domain.Event;
 import core.domain.Orchestra;
-import core.domain.User;
 
 import java.util.List;
 

@@ -68,7 +68,7 @@ public class OrchestraData {
         orchestraData.setName(orchestra.getName());
         orchestraData.setFounded_date(orchestra.getFounded_date());
         orchestraData.setMembers(emptyIfNull(orchestra.getMembers()).stream().map(UserData::from).collect(Collectors.toList()));
-        orchestraData.setRegistrations(emptyIfNull(orchestra.getRegistrations()).stream().map(RegistrationData::from).collect(Collectors.toList()));
+//        orchestraData.setRegistrations(emptyIfNull(orchestra.getRegistrations()).stream().map(RegistrationData::from).collect(Collectors.toList()));
         orchestraData.setWeb_page(orchestra.getWeb_page());
         orchestraData.setLeader_id(orchestra.getLeader() != null ? orchestra.getLeader().getId() : null);
         return orchestraData;
@@ -84,9 +84,9 @@ public class OrchestraData {
         orchestra.setRegistrations(emptyIfNull(this.getRegistrations()).stream().map(RegistrationData::fromThis).collect(Collectors.toList()));
         orchestra.setName(this.getName());
         orchestra.setWeb_page(this.getWeb_page());
-        if (orchestra.getLeader() != null) {
+        if (this.getLeader_id() != null) {
             User user = new User();
-            user.setId(orchestra.getLeader().getId());
+            user.setId(this.getLeader_id());
             orchestra.setLeader(user);
         }
         return orchestra;

@@ -279,9 +279,9 @@ where ID = 5;
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
 values (1, '10970 3rd Road', 'user@gmail.com', 'user12345', '12345', 'USER', 3, 2, 5);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
-values (2, '651 Porter Avenue', 'vgethings1@ted.com', 'rlibermore1', 'SPUO3t', 'USER', 1, 6, 4);
+values (2, '651 Porter Avenue', 'vgethings1@ted.com', 'randomUser1', '54321', 'USER', 1, 6, null);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
-values (3, '6319 Milwaukee Point', 'pklampt2@fema.gov', 'hblincowe2', 'uLIFM0D8je', 'USER', 1, 6, 4);
+values (3, '6319 Milwaukee Point', 'pklampt2@fema.gov', 'randomUser2', 'abcdef', 'USER', 1, 6, 4);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)
 values (4, '936 Warbler Crossing', 'vfenech3@microsoft.com', 'rmargram3', 'DK57FAkiq7', 'USER', 3, 7, 4);
 insert into USER (ID, ADDRESS, EMAIL, NAME, PASSWORD, STATUS, EDUCATION_ID, INSTRUMENT_ID, ORCHESTRA_ID)

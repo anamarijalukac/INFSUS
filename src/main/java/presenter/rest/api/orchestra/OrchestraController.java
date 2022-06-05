@@ -2,6 +2,8 @@ package presenter.rest.api.orchestra;
 
 import core.usecase.UseCaseExecutor;
 import core.usecase.orchestra.*;
+import org.camunda.bpm.engine.RuntimeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import presenter.rest.api.entities.ApiResponse;
@@ -9,7 +11,9 @@ import presenter.rest.api.entities.OrchestraRequest;
 import presenter.rest.api.entities.OrchestraResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,8 @@ public class OrchestraController implements OrchestraResource {
     private UpdateOrchestraUseCase updateOrchestraUseCase;
     private GetOrchestrasUseCase getOrchestrasUseCase;
     private DeleteOrchestraUseCase deleteOrchestraUseCase;
+    @Autowired
+    private RuntimeService runtimeService;
 
     public OrchestraController(UseCaseExecutor useCaseExecutor,
                                CreateOrchestraUseCase createOrchestraUseCase,
@@ -54,6 +60,16 @@ public class OrchestraController implements OrchestraResource {
                 new GetOrchestraUseCase.InputValues(id),
                 (outputValues) -> OrchestraResponse.from(outputValues.getOrchestra())
         );
+    }
+
+    @Override
+    public CompletableFuture<ApiResponse> signUpUserForOrchestra(Long orchestraId, Long userId) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("orchestraId", orchestraId);
+        variables.put("userId", userId);
+        runtimeService.startProcessInstanceByKey("usertoorchestrasignup", null, variables);
+        ApiResponse apiResponse = new ApiResponse(true, "Sign up request succeded!");
+        return CompletableFuture.completedFuture(apiResponse);
     }
 
     @Override
